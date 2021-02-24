@@ -1,0 +1,14 @@
+<template>
+    <lightning-card  title="Delivery Screen">
+        <lightning-button label="Check Delivery Time" slot="actions"></lightning-button>
+        <p class="slds-p-horizontal_small"><lightning-combobox
+            name="progress"
+            label="City"
+            value={value}
+            placeholder="Select Progress"
+            options={cityOptions}
+            onchange={handleChange} ></lightning-combobox></p>
+        <p slot="footer">Your Order Delivered with in {noOfDays} Days</p>
+    </lightning-card>
+   
+</template>

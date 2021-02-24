@@ -1,0 +1,23 @@
+<aura:component>
+    <div >       
+        <div class="accountHeaderTitle slds-align_absolute-center"> Jhon Doe Program Highlights</div>
+        <lightning:layout>
+            <lightning:layoutItem padding="around-small" class="slds-float_left accountLeft">
+                <div class="slds-grid"><span class="accountLabelElement">Client:</span><ui:outputText value="John Doe"/></div>
+                <div class="slds-grid"><span class="accountLabelElement">Total Debt:</span><ui:outputText value="$25,000"/></div>
+                <div class="slds-grid"><span class="accountLabelElement">Total Tradelines:</span> <ui:outputText value="4"/></div>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" class="slds-float_none">
+                
+                <div class="slds-grid"><span class="accountLabelElement">Total Debt Include:</span><ui:outputText value="$5,000"/></div>
+                <div class="slds-grid"><span class="accountLabelElement">Tradelines included:</span><ui:outputText value="1"/></div>
+                <div class="slds-grid"><span class="accountLabelElement">Total Program Fees: </span><ui:outputText value="$950"/></div>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" class="slds-float_right accountRight ">
+                <div class="slds-grid"><span class="accountLabelElement">Status:</span><ui:outputText value="Current"/></div>
+                <div class="slds-grid"><span class="accountLabelElement">Active Settlements :</span><ui:outputText value="1"/></div>
+                <div class="slds-grid"><span class="accountLabelElement">Total Client Payments :</span><ui:outputText value="$5,650"/></div>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+</aura:component>

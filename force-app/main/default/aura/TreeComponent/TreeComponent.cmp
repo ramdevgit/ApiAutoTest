@@ -1,0 +1,15 @@
+<aura:component>
+    <!-- Attribute Declaration-->
+    <aura:attribute name="items" type="Object" access="public"/>
+    <aura:attribute name="selectedValue" type="String" default="" access="public"/>
+    <!-- Handler Methods-->
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    
+    <div class="slds-tree_container">
+        <aura:if isTrue="{!v.items.length > 0}">
+            <aura:iteration items="{!v.items}" var="item">
+                <c:NestedTreeComponent item="{!item}"/>
+            </aura:iteration>
+        </aura:if>
+    </div>
+</aura:component>

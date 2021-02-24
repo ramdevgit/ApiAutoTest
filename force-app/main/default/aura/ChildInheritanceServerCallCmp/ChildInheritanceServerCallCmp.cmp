@@ -1,0 +1,12 @@
+<aura:component controller="ContactController" extends="c:InheritanceServerCallCmp" access="global">  
+    <aura:attribute type="Contact[]" name="returnedRecords" />
+    <aura:attribute type="List" name="columns" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:button label="Get Contacts" onclick="{!c.getAllContacts}"/>
+    <lightning:datatable
+                keyField="id"
+                data="{! v.returnedRecords}"
+                columns="{! v.columns }"
+                hideCheckboxColumn="true"/>
+	
+</aura:component>

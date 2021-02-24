@@ -1,0 +1,92 @@
+<aura:component controller="MobileBrandController">
+    <aura:attribute name="mobileBrand" type="Mobile_Brand__c" default="{'sobjectType':'Mobile_Brand__c',
+                                                                       'Name':'',
+                                                                       'ramsoftsquare__IMEI_Number__c':'',
+                                                                       'ramsoftsquare__Customer_Email__c':'',
+                                                                       'ramsoftsquare__Order_Date__c':'',
+                                                                       'ramsoftsquare__Delivery_DateTime__c':'',
+                                                                       'ramsoftsquare__Mobile_Color__c':'',
+                                                                       'ramsoftsquare__Price__c':'',
+                                                                       'ramsoftsquare__Inside_Box__c':'',
+                                                                       'ramsoftsquare__Discount_Available__c':'',}"/>
+   
+    <aura:attribute name="wrapperClass" type="Object"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <form class="slds-form--stacked ">          
+        
+        <div class="slds-size_1-of-2">
+            <lightning:input type="text"
+                             aura:id="mobileform" 
+                             label="Brand Name"
+                             name="brandname"
+                             value="{!v.mobileBrand.Name}"
+                             required="true"/> 
+        </div>
+        <div class="slds-size_1-of-2">
+            <lightning:input type="number"
+                             aura:id="mobileform" 
+                             label="IMEI Number"
+                             name="imeinumber"
+                             value="{!v.mobileBrand.ramsoftsquare__IMEI_Number__c}"
+                             required="true"/> 
+        </div>
+        
+        <div class="slds-size_1-of-2">
+            <lightning:input type="email" 
+                             aura:id="mobileform" label="Customer Email"
+                             name="customeremail"
+                             value="{!v.mobileBrand.ramsoftsquare__Customer_Email__c}"
+                             required="true"/>
+        </div>
+        
+        <div class="slds-size_1-of-2">
+            <lightning:input type="Date"
+                             aura:id="mobileform" 
+                             label="Order Date"
+                             name="brandname"
+                             value="{!v.mobileBrand.ramsoftsquare__Order_Date__c}"
+                             required="true"/> 
+        </div>
+        <div class="slds-size_1-of-2">
+            <lightning:input type="datetime" 
+                             aura:id="mobileform" 
+                             label="Delivery DateTime"
+                             name="deliverydatetime"
+                             value="{!v.mobileBrand.ramsoftsquare__Delivery_DateTime__c}"
+                             required="true"/> 
+        </div>
+        <div class="slds-size_1-of-2">
+            <lightning:select  aura:id="selectColor"  value="{!v.mobileBrand.ramsoftsquare__Mobile_Color__c}" label="" onchange="{!c.colorChange}">
+                <aura:iteration items="{!v.wrapperClass.pickList}" var="color">
+                    <option aura:id="optionColor" value="{!color}" text="{!color}"></option>
+                </aura:iteration>
+            </lightning:select>
+        </div>
+        <div class="slds-size_1-of-2">
+            <lightning:input type="checkbox"
+                             aura:id="mobileform" 
+                             label="Discount"
+                             name="brandname"
+                             value="{!v.mobileBrand.ramsoftsquare__Discount_Available__c}"
+                             required="true"/>
+        </div>
+        <div class="slds-size_1-of-2">
+            <lightning:dualListbox name="insidbox"  
+                                   label= "Select Gadgets" 
+                                   sourceLabel="Available" 
+                                   selectedLabel="Selected" 
+                                   fieldLevelHelp="This is a dual listbox" 
+                                   options="{!v.wrapperClass.multipickList}" 
+                                   value="{!v.mobileBrand.ramsoftsquare__Inside_Box__c}"
+                                   onchange="{! c.changeMultiPickValue}"/>  			
+        </div>
+        <lightning:button label="Save" 
+                          class="slds-m-top--medium"
+                          variant="brand"
+                          onclick="{!c.saveRecord}"/>
+        <lightning:button label="Cancel" 
+                          class="slds-m-top--medium"
+                          variant="brand"
+                          onclick="{!c.cancel}"/>
+    </form>
+</aura:component>

@@ -1,0 +1,471 @@
+<apex:page >
+   <head>
+        <apex:includeScript value="{! $Resource.jQuery }"/>
+        <apex:includeScript value="{!$Resource.dataTable}"/>
+        <apex:stylesheet value="{!$Resource.dataTablecss}"/>
+        <style>
+        
+            span{
+                color : red;
+             }
+           .split {
+                  height: 100%;
+                  width: 50%;
+                  position: fixed;
+                  z-index: 1;
+                  top: 0;
+                  overflow-x: hidden;
+                  padding-top: 20px;
+           }
+                
+         .left {
+                  left: 5%;
+                 
+          }
+                
+        .right {
+                  right: 5%;
+         }
+                
+         .centered {
+                  position: absolute;
+                  top: 50%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+                  text-align: center;
+        }
+        
+        .top{
+             padding-top : 50px;
+        }
+        </style>
+   </head>
+   <apex:slds />     
+        <body class="slds-scope">
+      <form id="AccountForm">
+        <div class="slds-card slds-align_absolute-center">
+           <div class="slds-card__body slds-card__body_inner">
+                
+                <div id="clonableDiv" class="split left">
+                     <div class="slds-card__header slds-grid">
+                         <p>Account</p>
+                     </div>
+                    <div class="slds-form-element slds-text-color_default ">
+                          <label class="slds-form-element__label " for="first_name">
+                              <abbr class="slds-required  " title="required" display="none">* </abbr> First Name</label>
+                          <div class="slds-form-element__control ">
+                                <input type="text" id="first_name" placeholder="Please Enter First Name" class="slds-input slds-size_small " />
+                                <br></br><span id="first_name_span"></span>
+                          </div>
+                           <label class="slds-form-element__label  " for="last_name">
+                           <abbr class="slds-required" title="required">* </abbr>Last Name</label>
+                          <div class="slds-form-element__control ">
+                                <input type="text" id="last_name" placeholder="Please Enter Last Name" class="slds-input slds-size_small" />
+                                 <br></br><span id="last_name_span"></span>
+                          </div>
+                           <label class="slds-form-element__label " for="full_name">
+                            <abbr class="slds-required" title="required">* </abbr>Full Name</label>
+                          <div class="slds-form-element__control">
+                                <input type="text" id="full_name"  class="slds-input slds-size_small " disabled="true"/>
+                          </div>
+                           <label class="slds-form-element__label " for="emailId">
+                               <abbr class="slds-required" title="required">* </abbr>Email ID</label>
+                          <div class="slds-form-element__control  ">
+                                <input type="text" id="emailID" placeholder="Please Enter Email Id" class="slds-input slds-size_small " />
+                                <br></br><span id="emailID_span"></span>
+                          </div>
+                           <label class="slds-form-element__label  " for="phone"> 
+                           <abbr class="slds-required" title="required">* </abbr>Phone</label>
+                          <div class="slds-form-element__control ">
+                                <input type="text" id="phone" placeholder="Please Enter Phone Number" class="slds-input slds-size_small " />
+                                 <br></br><span id="phone_span"></span>
+                          </div>
+                          <label class="slds-form-element__label " for="dob">
+                           <abbr class="slds-required" title="required">* </abbr>Date Of Birth</label>
+                          <div class="slds-form-element__control ">
+                                <input type="date" id="dob" placeholder="Please Enter Date of Birth" class="slds-input slds-size_small" />
+                                <br></br><span id="dob_span"></span>
+                          </div>
+                          <label class="slds-form-element__label " for="age">
+                              <abbr class="slds-required" title="required">* </abbr>Age</label>
+                          <div class="slds-form-element__control ">
+                                <input type="text" id="age"  class="slds-input slds-size_small" disabled="true" />
+                          </div>
+                          <label class="slds-form-element__label " for="country">
+                              <abbr class="slds-required" title="required">* </abbr>Country</label>
+                          <div class="slds-form-element__control ">
+                                <select id="country">
+                                <option selected="true" disabled="true">Choose Country</option>
+                                <option value="india">INDIA</option>
+                                <option value="usa">USA</option>
+                              </select>
+                               <br></br><span id="country_span"></span>
+                          </div>
+                          <label class="slds-form-element__label " for="state">
+                              <abbr class="slds-required" title="required">* </abbr>States</label>
+    
+                          <div id="stateDiv" class="slds-form-element__control ">
+                                <select id="state">
+                                <option selected="true" disabled="true">Choose States</option>
+
+                              </select>
+                               <br></br><span id="state_span"></span>
+                          </div>    
+                          <label class="slds-form-element__label " for="district">
+                              <abbr class="slds-required" title="required">* </abbr>District</label>
+                          <div class="slds-form-element__control ">
+                                <select id="district" >
+                                <option selected="true" disabled="true">Choose City</option>
+
+                              </select>
+                               <br></br><span id="district_span"></span>
+                          </div>  
+                               <button class="slds-button slds-button_neutral ">Preview</button>
+                    </div>                        
+                 </div>
+
+            </div>
+            
+       </div>
+       
+     </form>
+     <div id="clonedDiv" class="split right">
+     </div>
+  </body>
+    <script>
+            
+            $( window ).on( "load", function() {
+                    console.log( "window loaded" );
+                    $('select').addClass('slds-input slds-size_small'); 
+                   
+                    
+                });
+    
+            $(document).ready(function(){
+                
+            
+                $('#AccountForm').on('submit', function(){
+                        
+                        console.log(' First Name type--',jQuery.type($( "#first_name" ).val()),'value--',$( "#first_name" ).val());
+                        if ( $( "#first_name" ).val() == "" ) {  
+                                $( "#first_name_span" ).text( "Please Enter First Name" ).show();  
+                              
+                              }  
+                              event.preventDefault();
+                         
+                         console.log(' Last Name type--',jQuery.type($( "#last_name" ).val()),'value--',$( "#last_name" ).val());       
+                         if ( $( "#last_name" ).val() == "" ) {  
+                                $( "#last_name_span" ).text( "Please Enter Last Name" ).show();  
+                                 
+                              }  
+                              event.preventDefault();
+                              
+                          console.log('Email type--',jQuery.type($( "#emailID" ).val()),'value--',$( "#emailID" ).val());
+                          if ( $( "#emailID" ).val() == '' ) {  
+                                $( "#emailID_span" ).text( "Please Enter Email ID" ).show();  
+                               
+                              }  
+                              event.preventDefault();
+                          
+                           
+                           console.log('Phone Number type--',jQuery.type($( "#phone" ).val()),'value--',$( "#phone" ).val());   
+                           if ( $( "#phone" ).val() == "" ) {  
+                                $( "#phone_span" ).text( "Please Enter Phone Number" ).show();  
+                              }  
+                              event.preventDefault();
+                              
+                           
+                           console.log('Dob Number type--',jQuery.type($( "#dob" ).val()),'value--',$( "#dob" ).val());   
+                           if ( $( "#dob" ).val() == "" ) {  
+                                $( "#dob_span" ).text( "Please Select  Date of Birth" ).show();  
+                              }  
+                              event.preventDefault();
+
+                              
+                              console.log('Country type--',jQuery.type($( "#country" ).val()),'value',$( "#country" ).val());
+                           if ( $( "#country" ).val() == null ) {  
+                                $( "#country_span" ).text( "Please Select Country " ).show();  
+                              }  
+                              event.preventDefault();
+                              
+                              
+                              
+                           console.log('State type--',jQuery.type($( "#state" ).val()),'value--',$( "#state" ).val());
+                           if ( $( "#state" ).val() == null ) {  
+                               $( "#state_span" ).text( "Please Select State  " ).show();  
+                           }  
+                             event.preventDefault();  
+                           console.log('District type--',jQuery.type($( "#district" ).val()),'value--',$( "#district" ).val());                   
+                           if ( $( "#district" ).val() == null ) {  
+                              $( "#district_span" ).text( "Please Select District " ).show();  
+                            }  
+                            event.preventDefault();                   
+                          
+                          console.log('span---- text values---', $(this).find("span").text());
+                          if($(this).find("span").text() == ''){
+                              
+                            
+
+                             $("#clonableDiv").clone().appendTo("#clonedDiv");
+                             
+                             $("#clonedDiv").find("#country").val( $("#clonableDiv").find('#country').val()).change();
+                             $("#clonedDiv").find("#state").val( $("#clonableDiv").find('#state').val()).change();
+                             $("#clonedDiv").find("#district").val( $("#clonableDiv").find('#district').val()).change();
+                             console.log('country---', $("#clonableDiv").find('#country').val());
+                             $("#clonableDiv").addClass('left');
+                             $("input").prop("readonly", true); 
+                             $("select").prop("disabled", true);
+                             $('#clonableDiv').removeClass('left');
+                          }  
+                          else{
+                               
+                          }
+                });
+               
+                //used to bind value to fullname
+                $("#first_name").on("input", function(){
+                          $('#first_name_span').text("").show();  
+                          $('#full_name').prop('disabled', false);
+                          $("#full_name").val($(this).val()+' '+$('#last_name').val());
+                });
+               
+               
+               //used to allow text only
+                $('#first_name').keydown(function (e) {
+                      if ( e.ctrlKey || e.altKey) {
+                          e.preventDefault();
+                      } else {
+                          var key = e.keyCode;
+                          if (!((key == 8) || (key == 32) || (key == 46) || (key >= 35 && key <= 40) || (key >= 65 && key <= 90))) {
+                              e.preventDefault();
+                          }
+                      }
+                  });
+                   //used to allow text only
+                  $('#last_name').keydown(function (e) {
+                      if ( e.ctrlKey || e.altKey) {
+                          e.preventDefault();
+                      } else {
+                          var key = e.keyCode;
+                          if (!((key == 8) || (key == 32) || (key == 46) || (key >= 35 && key <= 40) || (key >= 65 && key <= 90))) {
+                              e.preventDefault();
+                          }
+                      }
+                  });
+                  
+                //used to bind value to fullname
+                $('#last_name').on("input",function(){
+                        $('#last_name_span').text("").show();  
+                        $('#full_name').prop('disabled', false);
+                        $("#full_name").val($("#first_name").val()+' '+$(this).val());
+                });
+                
+                $('#emailID').focusout(function(){
+
+                       $('#emailID').filter(function(){
+                          var email=$('#emailID').val();
+                          var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+                          if( !emailReg.test( email ) ) {
+                              $('#emailID_span').text("Please enter valid email ID").show();  
+                            
+                          }
+                       })
+                });
+                
+               $('#emailID').on('input', function(){
+                   $('#emailID_span').text("").show();
+               }); 
+                
+                
+               
+                $("#phone").on("keypress keyup blur",function (event) {
+                   $(this).val($(this).val().replace(/[^\d].+/, ""));
+                    if ((event.which < 48 || event.which > 57)) {
+                    event.preventDefault();
+                    }
+                });
+                
+                $('#phone').focusout(function(){
+                            console.log('length of the phone--', $('#phone').val().length);
+                            if($('#phone').val().length !=10  ){
+                                $( "#phone_span" ).text( "Phone Number Should be 10 digits" ).show();  
+                            }
+                            else if($('#phone').val().length ==10){
+                                $('#phone_span').text("").show();
+                            }
+                       
+                });
+
+                  $('#dob').on("blur", function(){
+                         $('#age').prop('disabled', false);
+                         $('#dob_span').text("").show();
+                        var currentYear = 0;
+                        var birthdate = new Date(document.getElementById("dob").value);
+                        var today = new Date();
+                        if(today.getMonth() < birthdate.getMonth() ){
+                            currentYear = 1;
+                        }
+                        else if(today.getMonth() == birthdate.getMonth() && today.getDate() < birthdate.getDate()){
+                            curruntYear =1;
+                        }
+                        var currentAge = (today.getFullYear() - birthdate.getFullYear()) - currentYear;
+                        if(isFutureDate(birthdate)){
+                            document.getElementById('dob_span').innerHTML = "Enter Date less than Today";
+                            document.getElementById('dob').value = "";
+                            document.getElementById('age').value = "";
+                            $('#age').prop('disabled', true);
+
+                        }
+                        else{
+                            document.getElementById("age").value = currentAge;
+
+                        }                               
+        
+                });
+               
+               function isFutureDate(dob){
+                   var now = new Date;
+                    var target = new Date(dob);
+                
+                    if (target.getFullYear() > now.getFullYear()) 
+                    {
+                        return true;
+                    }
+                    else if(target.getFullYear() == now.getFullYear()) 
+                    {
+                        if (target.getMonth() > now.getMonth()) {
+                        return true;
+                        } 
+                        else if(target.getMonth() == now.getMonth())
+                        {
+                            if (target.getDate() >= now.getDate()) {
+                                return true;
+                            }
+                            else
+                            {
+                                return false
+                            }
+                        }
+                                
+                    }
+                
+                   else{
+                    return false;
+                    }
+               }
+                
+                $('#country').change( function() {
+                     console.log('country value-----', document.getElementById('country').value);
+                     $('#country_span').text("").show();
+                     var country;
+                     if('india'==  document.getElementById('country').value){
+                         country = india;
+                     }
+                     if('usa'== document.getElementById('country').value){
+                         country = usa;
+                     }
+             
+             
+            
+                    let dropdown = $('#state');
+
+                    dropdown.empty();
+                    dropdown.append('<option selected="true" disabled="true">Choose States</option>');
+                    dropdown.prop('selectedIndex', 0);
+                    Object.keys(country).forEach(function(key) {
+                        console.table('Key : ' + key + ', Value : ' + country[key]);
+                        dropdown.append($('<option></option>').attr('value', key).text(country[key]));
+    
+                    });
+            
+              });
+              
+                
+                
+                $('#state').change( function() {
+                     console.log('country value-----', document.getElementById('state').value);
+                     $('#state_span').text("").show();
+                     var state;
+                     if('Andhra Prathesh' ==  document.getElementById('state').value){
+                         state = andhra;
+                     }
+                     if('Karnataka' == document.getElementById('state').value){
+                         state = karnataka;
+                     }
+                     if('Alaska' == document.getElementById('state').value){
+                         state = Alaska;
+                     }
+                     
+                     if('Alabama' == document.getElementById('state').value){
+                         state = Alabama;
+                     }
+             
+            
+                    let dropdown = $('#district');
+
+                    dropdown.empty();
+                    dropdown.append('<option selected="true" disabled="true">Choose District</option>');
+                    dropdown.prop('selectedIndex', 0);
+                    Object.keys(state).forEach(function(key) {
+                        console.table('Key : ' + key + ', Value : ' + state[key]);
+                        dropdown.append($('<option></option>').attr('value', key).text(state[key]));
+    
+                    });
+                    
+                    $('#district').change(function(){
+                           $('#district_span').text("").show();
+
+                    });
+
+            
+              });
+                
+                
+        });
+    
+            
+           
+      
+         
+           
+           var india={
+                   "Andhra Prathesh" : "Andhra Prathesh",
+                   "Karnataka" : "Karnataka"        
+           };
+               
+            var andhra={  
+                         "Anantapur":"Anantapur",
+                         "Chittoor": "Chittoor",
+                        "East Godavari":"East Godavari"
+                       
+                  };                 
+                
+              var karnataka={  
+                     
+                        "Bagalkot": "Bagalkot",
+                        "Ballari ": "Ballari "
+                       
+                  };
+               
+          var usa={
+                    "Alabama" : "Alabama",
+                    "Alaska"  : "Alaska"
+          };
+
+        var Alabama={
+                    "Athens" : "Athens",
+                    "Atmore" : "Atmore",
+                    "Bessemer": "Bessemer"  
+        };
+
+        var Alaska={
+                    "Cordova" : "Cordova",
+                    "Homer"  : "Homer",
+                    "Nome"  : "Nome"    
+        }; 
+            
+            
+  
+            
+    </script>
+</apex:page>

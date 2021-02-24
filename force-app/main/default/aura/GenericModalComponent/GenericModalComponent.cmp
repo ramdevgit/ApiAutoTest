@@ -1,0 +1,26 @@
+<aura:component>
+    <!--Attribute Declaration-->
+    <aura:attribute name="showModal" type="Boolean" default="true"/>
+    <aura:attribute name="modalComponent" type="Aura.Component[]"/> 
+    
+    <aura:registerEvent name="closeEditEvent" type="c:closeEditEvent" />
+    
+    <aura:handler name="init" value="{!this}" action="{! c. doInit}"/>
+    <aura:if isTrue="{!v.showModal}">
+        
+        <section role="dialog" tabindex="-1" aura:id="Modalbox" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container" >
+                <header class="slds-modal__header">
+                    
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.handleCloseEvent}">
+                        <lightning:icon iconName="utility:close" alternativeText="close!" variant="close" size="small"/>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Popup Modal</h2>
+                </header>
+                {!v.modalComponent}
+            </div>
+        </section>
+        <div aura:id="Modalbackdrop"  class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    
+</aura:component>

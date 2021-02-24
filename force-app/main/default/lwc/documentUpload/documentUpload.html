@@ -1,0 +1,107 @@
+<template>
+  
+    <template if:true={showImage}>
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        
+      <div class=" slds-modal_content slds-p-around_medium" id="modal-content-id-1" onmouseover={modalContentOnfocus} onmouseout={modalContentFadeout}>
+        
+        <div style="background-color: var(--lwc-modalPreviewPlayerBackgroundColor,rgba(0,0,0,.8));" class={toolbarClasses}>
+          
+          <div class="slds-size_4-of-12">
+              <p>
+               {currentDocument.Title}  
+              </p>
+          </div>
+         
+          <div class=" slds-size_6-of-12 slds-grid">
+            
+              <div id={currentDocument.url} onclick={handleDownloadDocument}>
+                
+                <lightning-button-icon icon-name="utility:download"  alternative-text="Settings" title="Settings"></lightning-button-icon>
+                <a style="padding-left: 5px; color: white;">Download</a>
+              </div>
+              
+              <div onclick={handleShareDocument}>
+                <lightning-button-icon icon-name="utility:share"  alternative-text="Settings" title="Settings"></lightning-button-icon>
+                <a style="padding-left: 5px; color: white;">Share</a>
+              </div>
+              
+              <div onclick={handleGetPublicLink}>
+                <lightning-button-icon icon-name="utility:link"  alternative-text="Settings" title="Settings"></lightning-button-icon>
+                <a style="padding-left: 5px; color: white;">Public Link</a>
+              </div>
+              
+              <div>
+                <lightning-button-menu alternative-text="Show More">
+                  <lightning-menu-item value="MenuItemOne" label="View File Details"></lightning-menu-item>
+                  <lightning-menu-item value="MenuItemTwo" label="Upload New Version"></lightning-menu-item>
+                  <lightning-menu-item value="MenuItemThree" label="Edit file Details"></lightning-menu-item>
+                  <lightning-menu-item value="MenuItemFour" label="Delete"></lightning-menu-item>
+              </lightning-button-menu>
+            </div>
+
+          </div>
+
+          <div style="padding-left: 13em;" class="slds-size_2-of-12 slds-float_right">
+            <lightning-button-icon icon-name="utility:close"   alternative-text="Close" class="slds-m-left_xx-small" title="Close" onclick={closeModal}></lightning-button-icon>
+          </div>
+          <c-modal header-title="Share">
+            <span slot="body"> 
+              <p>test</p>
+                <!-- <img src={currentDocument.url} id={currentDocument.url} onclick={openImageModal}/>-->
+           </span>
+           
+        </c-modal>
+          
+        </div>
+
+        <div class="force-image">
+          <div class="image-view">
+            <img style="height:100vh;" src={currentDocument.url} id={currentDocument.url}/>
+          </div>
+        </div>
+        
+    </div>
+  </section>    
+        <div  class="slds-backdrop slds-backdrop_open"></div>
+
+    </template>
+    
+
+    <lightning-file-upload
+            label="Attach receipt"
+            name="fileUploader"
+            accept={acceptedFormats}
+            record-id={recordId}
+            onuploadfinished={handleUploadFinished}
+            multiple>
+    </lightning-file-upload>
+    <lightning-layout multiple-rows>
+
+        <template if:true={contentDocuments} for:each={contentDocuments} for:item="document" for:index="indexVar">
+        
+            
+                <lightning-layout-item  key={document.Id}  size="6" padding="around-small">
+                   
+                    <div class="slds-grid">
+                      <div class="slds-col slds-size_2-of-12">
+                        <template if:true={document.isImage}>
+                            <img  src={document.url} name={indexVar} onclick={openImageModal}/>
+                          </template>
+                          <template if:false={document.isImage}>
+                            <lightning-icon  icon-name={document.iconName} src={document.url} alternative-text={document.altText} title={document.Title}></lightning-icon>
+                          </template>
+                          
+                        </div>
+
+                        <div  class="slds-col slds-size_10-of-12">
+                            <p class="slds-truncate" style="color:var(--lwc-brandTextLink,rgb(0, 109, 204));" >{document.Title}</p>
+                           <p>{document.CreatedDate} . {document.ContentSize} . {document.FileExtension}</p>
+                        </div>
+                    </div>
+                   
+                </lightning-layout-item>
+        </template>
+    </lightning-layout>
+    
+</template>

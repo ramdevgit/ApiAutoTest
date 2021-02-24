@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="accordoinShowSelection Application Event " >
+    <aura:attribute name="showSelection" type="String"/>
+</aura:event>

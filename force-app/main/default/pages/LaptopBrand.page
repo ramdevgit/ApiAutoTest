@@ -1,0 +1,14 @@
+<apex:page controller="ViewLaptopBrand" >
+   <apex:form >
+        <apex:pageBlock >
+           <apex:commandButton value="Display" action="{!getLaptopBrands}"/>
+            <apex:pageBlockTable value="{!laptopBrands}" var="laptopBrand">
+                <apex:column value="{!laptopBrand.Id}"/>
+                <apex:column value="{!laptopBrand.Name}"/>
+                <apex:column value="{!laptopBrand.Price__c}"/>
+                <apex:column value="{!laptopBrand.Model_Number__c}"/> 
+                <apex:column value="{!laptopBrand.Offer__c}"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>    
+    </apex:form>
+</apex:page>

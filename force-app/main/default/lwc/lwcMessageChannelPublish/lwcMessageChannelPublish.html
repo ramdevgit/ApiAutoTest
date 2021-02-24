@@ -1,0 +1,15 @@
+<template>
+    <svg xmlns="http://www.w3.org/2000/svg" width="300" height="200">;
+        <use xlink:href={svgURL}></use>
+    </svg>
+  
+  <template for:each={accountList} for:item="account">
+        <div key={account.Id} style="background-color: white;">
+            <a href="#"   data-value={account.Id} onclick={handleAccountClick}>
+                {account.Name}
+            </a>
+        </div>
+    </template>
+    <p>test</p>
+
+</template>

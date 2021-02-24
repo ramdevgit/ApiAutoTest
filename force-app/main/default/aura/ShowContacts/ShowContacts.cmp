@@ -1,0 +1,37 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" controller="ContactController" access="global" >
+  
+    <!--Aura attributes-->
+    <aura:attribute name="contactList" type="Contact[]"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="selectedRowsCount" type="Integer" default="0"/>
+    <aura:attribute name="maxRowSelection" type="Integer" default="5"/>
+	<aura:attribute name="hideCheckboxColumn" type="Boolean" default="false"/>
+    <aura:attribute name="showRowNumberColumn" type="Boolean" default="false"/>
+    <aura:attribute name="rowNumberOffset" type="Integer" default="0"/>
+
+    <c:ApexService aura:id="apexServiceCmp"/>
+    <aura:handler name="init"  action="{! c.doInit }" value="{!this }"/>
+    <lightning:button label="Get Contacts" onclick="{!c.getAllContacts}"/>
+     
+    <div class="input-group">
+    	<lightning:input type="toggle" label="Hide Checkbox Column" name="inputSelectable" checked="{! v.hideCheckboxColumn }"/>
+    </div>
+    
+    <div class="input-group">
+        <lightning:input type="toggle" label="Show Row Number Column" name="inputRowNumber" checked="{! v.showRowNumberColumn}"/>
+        <lightning:input type="number" label="Row number offset" name="inputRowNumberOffset" value="{! v.rowNumberOffset}"/>
+   </div>
+    <div >
+        <h1>Selected Rows: {! v.selectedRowsCount }</h1>
+       	<lightning:datatable
+                keyField="id"
+                data="{! v.contactList }"
+                columns="{! v.columns }"
+                maxRowSelection="{! v.maxRowSelection }"
+                onrowselection="{! c.updateSelectedText }"
+                showRowNumberColumn="{! v.showRowNumberColumn }"
+                rowNumberOffset="{! v.rowNumberOffset }"
+                hideCheckboxColumn="{!v.hideCheckboxColumn}"/>
+    </div>
+    
+</aura:component>

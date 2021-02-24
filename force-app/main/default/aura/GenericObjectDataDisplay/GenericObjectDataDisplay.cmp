@@ -1,0 +1,7 @@
+<aura:component >
+
+    <aura:attribute name="objectList" type="List" />
+    <aura:iteration items="{!v.objectList}" var="object">
+ 		
+    </aura:iteration>
+</aura:component>

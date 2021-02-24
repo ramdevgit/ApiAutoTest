@@ -1,0 +1,6 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+	<aura:handler name="eventFired" event="c:componentEventFired" action="{!c.handleEvent}"></aura:handler>
+    <aura:attribute name="ParentAttribute" type="String" default="''"></aura:attribute>
+    The ValueOf Attribute is {!v.ParentAttribute}
+    <c:SampleChildComponent />
+</aura:component>

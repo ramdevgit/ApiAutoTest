@@ -1,0 +1,8 @@
+<aura:component >
+    
+    <!-- Attribute Declaration-->
+    <aura:attribute name="textValue" type="String" description="Used to store the string type of data" access="public"/>
+    
+    <lightning:button variant="brand" label="Change" onclick="{!c.showText}"/>
+     Your Child Component Text {!v.textValue}
+</aura:component>

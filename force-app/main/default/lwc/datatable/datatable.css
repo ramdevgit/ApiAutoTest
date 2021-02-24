@@ -1,0 +1,19 @@
+.hide {
+    display: none;
+}
+.header{
+    color: black;
+    /*padding: 5px;*/
+}
+th{
+        /* css-3 */
+        word-wrap: break-word;
+        white-space: normal;
+        font-size: .9em;
+}
+.scrollable-header-class{
+    __position: absolute;
+}
+.scrollArea {
+    position: relative;
+}

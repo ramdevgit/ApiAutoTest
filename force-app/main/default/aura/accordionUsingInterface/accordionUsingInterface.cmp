@@ -1,0 +1,60 @@
+<aura:component >
+    <lightning:button onclick="{! c.handleShowActiveSectionName }" label="Show Active Section Name"/>
+    
+    <aura:handler name="init" value="{!this}" action="{! c. doInit}"/>
+    <aura:attribute name="showSection" type="String"/>
+    
+    <aura:method name="showSelectionMethod" action="{!c.selectSectionMethodAction}" 
+                 description="showSelectionMethod method with parameters"> 
+        <aura:attribute name="section" type="String" /> 
+    </aura:method>
+    <aura:handler event="c:accordionApplicationEvent" action="{!c. showSelectionEvent}"  />
+    <ul class="slds-accordion">
+        <li class="slds-accordion__list-item">
+            <section class="slds-accordion__section slds-is-open">
+                <div class="slds-accordion__summary">
+                    <h3 class="slds-accordion__summary-heading">
+                        <button aria-controls="accordion-details-01" aria-expanded="true" id="Lenovo" class="slds-button slds-button_reset slds-accordion__summary-action" onclick="{!c. selectSection}">
+                            <lightning:icon iconName="utility:chevronright" alternativeText="emoji" size="small"/>
+                            <span class=" slds-truncate" title="Accordion summary">Brand 1</span>
+                        </button>
+                    </h3>
+                </div>
+                <aura:if isTrue="{!v. showSection=='Lenovo'}">
+                    <div class="childItem slds-accordion__content" id="accordion-details-01">Lenovo</div>
+                </aura:if>     
+            </section>
+        </li>
+        <li class="slds-accordion__list-item">
+            <section class="slds-accordion__section slds-is-open">
+                <div class="slds-accordion__summary">
+                    <h3 class="slds-accordion__summary-heading">
+                        <button aria-controls="accordion-details-01" id="HP" aria-expanded="true" class="slds-button slds-button_reset slds-accordion__summary-action" onclick="{!c. selectSection}">
+                            <lightning:icon iconName="utility:chevronright" alternativeText="emoji" size="small"/>
+                            <span class="  slds-truncate" title="Accordion summary">Brand 2</span>
+                        </button>
+                    </h3>
+                </div>
+                <aura:if isTrue="{!v. showSection=='HP'}">
+                    <div class="childItem slds-accordion__content" id="accordion-details-01">HP</div>
+                </aura:if>           
+            </section>
+        </li>
+        <li class="slds-accordion__list-item">
+            <section class="slds-accordion__section slds-is-open">
+                <div class="slds-accordion__summary">
+                    <h3 class="slds-accordion__summary-heading">
+                        <button aria-controls="accordion-details-01" id="ACER" aria-expanded="true" class="slds-button slds-button_reset slds-accordion__summary-action" onclick="{!c. selectSection}">
+                            <lightning:icon iconName="utility:chevronright" alternativeText="emoji" size="small"/>
+                            <span class="slds-truncate" title="Accordion summary">Brand 3</span>
+                        </button>
+                    </h3>
+                </div>
+                <aura:if isTrue="{!v. showSection =='ACER'}">
+                    <div class="childItem slds-accordion__content" id="accordion-details-01">ACER</div>
+                </aura:if>
+            </section>
+        </li>
+    </ul>
+    
+</aura:component>

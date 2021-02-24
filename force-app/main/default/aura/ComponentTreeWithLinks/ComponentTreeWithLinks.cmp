@@ -1,0 +1,6 @@
+<aura:component>
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:attribute name="items" type="Object" access="PRIVATE"/>
+
+    <lightning:tree items="{! v.items }" header="Example Tree with navigation links"/>
+</aura:component>

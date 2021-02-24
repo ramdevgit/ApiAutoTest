@@ -1,0 +1,5 @@
+/* Hence its a row component we used table row css because the nested custom element with tr tag follow differently*/
+:host {
+    display: table-row;
+    border-top: var(--lwc-borderWidthThin,1px) solid var(--lwc-colorBorder,rgb(221, 219, 218));
+}

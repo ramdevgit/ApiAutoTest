@@ -1,0 +1,33 @@
+/* Hence its a cell component we used table cell css because the nested custom element with td tag follow differently*/
+:host {
+    display: table-cell;
+    padding: .5rem;
+    border-top: var(--lwc-borderWidthThin,1px) solid var(--lwc-colorBorder,rgb(221, 219, 218));
+    border-left: var(--lwc-borderWidthThin,1px) solid var(--lwc-colorBorder,rgb(221, 219, 218));
+}
+.slds-button__icon_edit:hover {
+    fill: #1589ee;
+    color: #1589ee;
+    opacity: 1;
+}
+.slds-button__icon_edit .slds-icon-text-default:hover{
+    fill: #1589ee!important;
+
+}
+.slds-button__icon_edit{
+    line-height: 1;
+    vertical-align: middle;
+    justify-content: center;
+    color: #706e6b;
+    opacity: .5;
+    width: auto!important;
+    display: none;
+
+}
+:host(:hover) .slds-button__icon_edit{
+    fill: #1589ee;
+    color: #1589ee;
+    opacity: .5;
+    display: inline-block;
+
+}

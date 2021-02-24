@@ -1,0 +1,26 @@
+<aura:component controller="AccountController" implements="flexipage:availableForRecordHome,force:hasRecordId,lightning:actionOverride,force:hasRecordId" access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <body class="background">
+        <div class="slds-grid">
+            <div class="treemenu">
+                <div>
+                    <c:PaymentConsoleTree />
+                </div>            
+            </div>
+            <div class="accountHeader">
+                <c:PaymentConsoleAccountHeader/>
+                
+                    <div class="contacttable">
+                        <c:PaymentConsoleAccount recordId="{!v.recordId}"/>
+                    </div>
+            </div>
+            
+            <div class="treerightmenu">
+                <div class="treerightmenuinner">
+                    <c:PaymentConsoleOpportunity recordId="{!v. recordId}"/>
+                </div>
+            </div>
+
+        </div>
+     </body>
+</aura:component>

@@ -1,0 +1,109 @@
+<aura:component controller="ContactController">
+    <!--Attribute Declaration-->
+    <aura:attribute name="wrapperClass" type="Object" />
+    <aura:attribute name="paginationList" type="Contact[]"/>
+    <aura:attribute name="showEditable" type="Boolean" default="false"/>
+    <aura:attribute name="editRecord" type="map" default="{}" />
+    <aura:attribute name="isEdit" type="Boolean" default="false"/>
+    <aura:attribute name="isCreate" type="Boolean" default="false"/>
+    <aura:attribute name="pageSize" type="Integer" default="15"/>
+    <aura:attribute name="totalSize" type="Integer"/>
+    <aura:attribute name="start" type="Integer" />
+    <aura:attribute name="end" type="Integer"/>
+    
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="closeEditEvent" event="c:closeEditEvent" action="{!c.handleCancelEditEvent}"  description="This handler method used to handle the close modal action"/>
+    
+    <aura:if isTrue="{!v.showEditable}">
+        <!-- <section role="dialog" tabindex="-1" aura:id="Modalbox" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container" >
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.handleCancelEditEvent}">
+                      
+                        <lightning:icon iconName="utility:close" alternativeText="close!" variant="close" size="small"/>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit Contact</h2>
+                </header>
+                <aura:if isTrue="{!v.isEdit}">
+                    <ramsoftsquare:EditCreateRecord record="{!v.editRecord}" />
+                </aura:if>
+                <aura:if isTrue="{!v.isCreate}">
+                    <ramsoftsquare:EditCreateRecord  />
+                </aura:if>
+            </div>
+        </section>
+        
+        <div aura:id="Modalbackdrop"  class="slds-backdrop slds-backdrop_open"></div>-->
+        
+        <aura:if isTrue="{!v.isEdit}">  
+            <c:GenericModalComponent>
+                <aura:set attribute="modalComponent">
+                    <c:EditCreateRecord record="{!v.editRecord}">
+                    </c:EditCreateRecord>
+                </aura:set>            
+            </c:GenericModalComponent>
+        </aura:if>
+        <aura:if isTrue="{!v.isCreate}">
+            <c:GenericModalComponent>
+                <aura:set attribute="modalComponent">
+                    <c:EditCreateRecord/>
+                </aura:set>            
+            </c:GenericModalComponent>
+        </aura:if>
+    </aura:if> 
+    
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+        <thead>
+            <tr>   
+                <lightning:button variant="brand" label="Create" title="Brand action" onclick="{! c.createRecord }" />
+            </tr>
+            <tr class="slds-line-height_reset">
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Opportunity Name">Last Name</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Opportunity Name">Email</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Opportunity Name">Lead Source</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Opportunity Name">Department </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <aura:iteration items="{!v.paginationList}" var="contact" indexVar="index">
+                <tr class="slds-hint-parent">
+                    <td>
+                        <div class="slds-truncate" >{!contact.LastName}</div>
+                    </td>
+                    <td>
+                        <div class="slds-truncate" >{!contact.Email}</div>
+                    </td>
+                    <td>
+                        <div class="slds-truncate" >{!contact.LeadSource}</div>
+                    </td>
+                    <td>
+                        <div class="slds-truncate" >{!contact.Department}</div>
+                    </td>
+                    <td role="gridcell">
+                        <lightning:buttonMenu alternativeText="Show menu" onselect="{! c.handleEditDelete}">
+                            <lightning:menuItem aura:id="editDeleteItems" value="{!index}" label="Edit" checked="false" />
+                            <lightning:menuItem aura:id="editDeleteItems" value="{!index}" label="Delete" checked="false" />
+                        </lightning:buttonMenu>
+                    </td>
+                </tr>   
+            </aura:iteration>
+        </tbody>
+        <tfoot>
+            <lightning:button label="First" disabled="{!v.start == 0}"  onclick="{!c.firstPage}"/>
+            <lightning:button label="Previous" disabled="{!v.start == 0}"  onclick="{!c.previousPage}"/>
+            <lightning:button label="Next" disabled="{!v.end >= v.totalSize}" onclick="{!c.nextPage}" />
+            <lightning:button label="Last" disabled="{!v.end >= v.totalSize}" onclick="{!c.lastPage}" />
+            {!v.paginationList.length} rows in {!v.wrapperClass.listContact.length}
+        </tfoot>
+    </table>
+</aura:component>

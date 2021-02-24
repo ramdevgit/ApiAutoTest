@@ -1,0 +1,8 @@
+<aura:component >
+    <aura:attribute name="pickListValue" type="String[]"/>
+    <lightning:select  aura:id="insideBoxItems"  value="{!v.selectedItems}"  label="">
+            <aura:iteration items="{!v.pickListValue}" var="insideBox">
+                <option aura:id="optionBox" value="{!insideBox}" text="{!insideBox}"></option>
+            </aura:iteration>
+        </lightning:select>
+</aura:component>

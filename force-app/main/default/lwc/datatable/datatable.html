@@ -1,0 +1,62 @@
+<template>
+  <!--Table component begins-->
+  <div class={tableProperties.scrollableCls} style={tableProperties.scrollableHeight}>
+    <div class={tableProperties.scrollableyCls} onscroll={handleScroll}>
+      <table
+        class="slds-table slds-table_bordered slds-no-row-hover slds-table--header-fixed  slds-table_col-bordered slds-table_fixed-layout slds-table_resizable-cols">
+        <thead class={headerClass}>
+          <tr class="slds-text-title_caps">
+            <!--Determines need Multi Select or not-->
+            <template if:true={isMultiselect}>
+              <th class="slds-hyphenate " scope="col" style="padding-left: 1rem; " width="5%">
+                <div class={tableProperties.scrollableCellCls} width="5%">
+                  <a style="padding-left:0" class={tableProperties.scrollableActionClass}>
+                    <lightning-input type="checkbox" label="" checked={selectAll} value={selectAll} name="Multi"
+                      onchange={onMultiSelect}>
+                    </lightning-input>
+                  </a>
+                </div>
+              </th>
+            </template>
+            <!--header based on column definition-->
+            <template for:each={columns} for:item="col">
+              <th key={col.fieldName} class="slds-hyphenate " width={col.width}>
+                <div class={tableProperties.scrollableCellCls} width={col.width}
+                  style={tableProperties.scrollableCellStyle}>
+                  <a class={tableProperties.scrollableActionClass}>
+                    <template if:false={col.headerIcon}>
+                      <span class="" title={col.label}>{col.label} </span>
+                    </template>
+                    <template if:true={col.headerIcon}>
+                      <span class="" title={col.label}>
+                        <lightning-icon icon-name={col.iconName} alternative-text="icon" size="small"></lightning-icon>
+                      </span>
+                    </template>
+                  </a>
+                </div>
+              </th>
+            </template>
+          </tr>
+        </thead>
+        <tbody>
+          <!--Table Row component-->
+          <template for:each={rows} for:item="row" for:index="parentindex">
+            <c-datatable-row key={row.Id} row={row} data-id={row.Id} parent-row-indx={parentindex}
+              ontoggletree={handleOnExpandTreeEvent} onclick={onRowClick} oncellclick={handleCellClick}
+              table-config={tableConfig} oninputchange={handleInputChange} oncheckboxchange={handleCheckboxChange}
+              columns={columns} oneditall={handleEditAllEvent} is-multiselect={isMultiselect}>
+            </c-datatable-row>
+            <!--Row child component -->
+            <template for:each={row.childrens} for:item="child" for:index="index">
+              <c-datatable-row class={row.showChild} key={child.Id} parent-row-indx={parentindex} child-row-indx={index}
+                oninputchange={handleInputChange} onclick={onRowClick} table-config={tableConfig}
+                oncellclick={handleCellClick} row={child} columns={columns} oncheckboxchange={handleCheckboxChange}
+                oneditall={handleEditAllEvent} is-multiselect={isMultiselect}>
+              </c-datatable-row>
+            </template>
+          </template>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>

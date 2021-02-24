@@ -1,0 +1,5 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:actionOverride">
+	<c:printHello greeting="This is printHello"/>
+     <lightning:button variant="base" label="Base" title="Base action" onclick="{! c.handleClick }"/>
+
+</aura:component>

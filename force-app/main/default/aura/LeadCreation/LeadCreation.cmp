@@ -1,0 +1,86 @@
+<aura:component 
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" 
+                access="global" >
+    
+    <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+        
+        <input type="hidden" name="oid" value="00D2v0000014t9b"/>
+        <input type="hidden" name="retURL" value="http://www.google.com"/>
+        <div style="background-color:white;">
+            <div style="padding: 0.5rem;" class="slds-align_absolute-center">
+                    <h1><b>AutonomIQ</b></h1>
+                </div>
+            
+            <div style="padding-left: 24rem;padding-top: 0.5rem;" class="slds-grid  slds-size_12-of-12">
+                <div class="slds-col slds-size_4-of-12">
+                    <label for="first_name">First Name</label>
+                </div>
+                <div class=" slds-col slds-size_4-of-12">
+                    <input  id="first_name" maxlength="40" name="first_name" size="20" type="text" />
+                </div>
+            </div>
+            <div style="padding-left: 24rem;padding-top: 0.5rem;" class="slds-grid  slds-size_12-of-12">
+                <div class="slds-col slds-size_4-of-12">
+                    <label for="last_name">Last Name</label>
+                </div>
+                <div class=" slds-col slds-size_4-of-12">
+                    <input  id="last_name" maxlength="80" name="last_name" size="20" type="text" />
+                </div>
+                
+                
+            </div>
+            <div style="padding-left: 24rem;padding-top: 0.5rem;" class="slds-grid  slds-size_12-of-12">
+                <div class="slds-col slds-size_4-of-12">
+                    <label for="email">Email</label> 
+                </div>
+                <div class=" slds-col slds-size_4-of-12">
+                    <input  id="email" maxlength="80" name="email" size="20" type="text" />
+                </div>
+            </div>
+            <div style="padding-left: 24rem;padding-top: 0.5rem;" class="slds-grid  slds-size_12-of-12">
+                <div class="slds-col slds-size_4-of-12">
+                    <label for="company">Company</label>
+                </div>
+                <div class=" slds-col slds-size_4-of-12">
+                    <input  id="company" maxlength="40" name="company" size="20" type="text" />
+                </div>
+                
+                
+            </div> 
+            <div style="padding-left: 24rem;padding-top: 0.5rem;" class="slds-grid  slds-size_12-of-12">
+                <div class="slds-col slds-size_4-of-12">
+                    <label for="city">City</label>
+                </div>
+                <div class=" slds-col slds-size_4-of-12">
+                    <input  id="city" maxlength="40" name="city" size="20" type="text" />
+                </div>
+                
+            </div>
+            <div style="padding-left: 24rem;padding-top: 0.5rem;" class="slds-grid slds-size_12-of-12" >
+                <div class="slds-col slds-size_4-of-12">
+                    <label for="state">State/Province</label>
+                </div>
+                <div class=" slds-col slds-size_4-of-12">
+                    <input  id="state" maxlength="20" name="state" size="20" type="text" />
+                </div>
+                
+            </div>
+            <div style="padding-left: 24rem;padding-top: 0.5rem;" class="slds-grid slds-size_12-of-12" >
+                <div class="slds-col slds-size_4-of-12">
+                    <label for="state">Country</label>
+                </div>
+                <div class=" slds-col slds-size_4-of-12">
+                    <input  id="country" maxlength="20" name="state" size="20" type="text" />
+                </div>
+                
+            </div>
+            <div style="padding: 0.5rem;" class="slds-grid slds-size_12-of-12" >
+                <div class="slds-align_absolute-center">
+                    <input type="submit" name="submit"/>
+                </div>
+            </div>  
+        </div>
+        
+    </form>
+    
+</aura:component>

@@ -1,0 +1,4 @@
+<design:component>
+    <design:attribute name="priceBookId" />   
+    <design:attribute name="opportunityId" />
+</design:component>

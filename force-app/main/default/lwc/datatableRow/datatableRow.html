@@ -1,0 +1,15 @@
+<template>
+    <!--Row contents-->
+    <!--Row level checkbox if multiselect enabled-->
+    <template if:true={isMultiselect}>
+      <td style="padding-left: 1rem;" >
+        <lightning-input type="checkbox" label="" name="Id" checked={checked}  onchange={onCheckboxClick}>
+        </lightning-input>
+      </td>
+    </template>
+    <!--Iterate over columns  -->
+    <template for:each={columns} for:item="col">
+      <c-datatable-cell key={col.fieldName}   table-config={tableConfig} parent-row-indx={parentRowIndx} child-row-indx={childRowIndx} oncellclick={handleCellClick} ontoggletree={onToogleTree} oninputchange={onInputChange} oneditall={onEditAll}
+        column-config={col} row={row} ></c-datatable-cell>
+    </template>
+</template>

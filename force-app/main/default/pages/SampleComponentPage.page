@@ -1,0 +1,16 @@
+<apex:page controller="AccountController" lightningStyleSheets="true">
+
+ <apex:form >   
+
+    <button class="popup" onclick="updateRecord()">Edit</button>
+        <span id="editRecord"> </span>
+
+  </apex:form>
+   <script>
+      function updateRecord(){
+      var spanElement = document.getElementById('editRecord');
+      spanElement.innerHTML ="<c:SampleComponent accountName="My component's value" shippingCountry="INDIA" shippingCity="Chennai" shippingStreet="Tharamani" phone="9025139754"/>";
+
+      }
+</script>         
+</apex:page>

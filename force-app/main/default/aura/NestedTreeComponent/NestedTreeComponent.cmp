@@ -1,0 +1,29 @@
+<aura:component >
+    <!-- Attribute Declaration-->
+    <aura:attribute name="item" type="Object"/>
+    <aura:attribute name="showChild" type="Boolean" default="false"/>
+    <!-- Register Event-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <ul aria-labelledby="treeheading" class="slds-tree" role="tree">
+        <li aria-expanded="true" aria-label="Tree Branch" aria-level="1" role="treeitem" >
+            <div class="slds-tree__item">
+                <aura:if isTrue="{!v.item.items.length > 0}">
+                    <button class="slds-button slds-button_icon slds-m-right_x-small" aura:id="{!v.item.name}" aria-hidden="true" tabindex="-1" title="Expand Tree Branch" onclick="{!c.selectNested}">
+                            <lightning:icon iconName="utility:chevronright" alternativeText="emoji" size="small"/>
+                        <span class="slds-assistive-text">Expand Tree Branch</span>
+                    </button>
+                </aura:if>
+                <span class="slds-has-flexi-truncate">
+                    <span class="slds-tree__item-label slds-truncate" title="Tree Branch">{!v.item.label}</span>
+                </span>
+            </div>
+        </li>
+    </ul>
+    <aura:if isTrue="{!v.showChild}">
+        <div class="childItem">
+            <c:TreeComponent items="{!v.item.items}"/>
+        </div>
+    </aura:if>
+    
+</aura:component>

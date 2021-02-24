@@ -1,0 +1,19 @@
+<aura:component implements="force:appHostable">
+    
+    <!-- Attribute Declaration-->
+    <aura:attribute name="textValue" type="String" description="Used to store the string type data" access="public" default="DefaultTest"/>
+    <aura:attribute name="valueChange" type="Boolean" default="false" description="User to store the boolean value" access="private"/>
+    
+    <lightning:input type="text" aura:id="inputValue" onchange="{! c.bindValue}" value="{!v.textValue}"/>
+    Your Entered{!v.textValue}
+    <aura:if isTrue="{!v.valueChange}">
+        <div>
+            <c:ChildBindingComponent  textValue="{!v.textValue}"/>
+        </div>
+        <aura:set attribute="else">
+            <div>
+                <c:ChildBindingComponent  textValue="{#v.textValue}"/>
+            </div>
+        </aura:set>
+    </aura:if>
+</aura:component>

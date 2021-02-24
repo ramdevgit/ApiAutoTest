@@ -1,0 +1,5 @@
+<apex:page controller="CallTestLightning" action="{!openCallTestLightning}" sidebar="true">
+    <p>
+        test
+    </p>
+</apex:page>

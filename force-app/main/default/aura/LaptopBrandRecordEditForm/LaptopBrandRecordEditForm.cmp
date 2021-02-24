@@ -1,0 +1,37 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global">
+    <aura:attribute name="fields" type="String[]" default="['Name','ramsoftsquare__Offer__c','ramsoftsquare__Model_Number__c','ramsoftsquare__Price__c']" />
+    <aura:attribute name="recordId" type="String"/>
+    
+    <lightning:recordForm
+                    objectApiName="Laptop_Brand__c"
+                    fields="{!v.fields}"
+                    onsuccess="{!c.handleSuccess}" />
+    
+	<!--<aura:attribute name="disabled" type="Boolean" default="false" />
+    <aura:attribute name="saved" type="Boolean" default="false" />
+    <aura:attribute name="showSpinner" type="Boolean" default="true" />
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner />
+    </aura:if>
+    <aura:if isTrue="{!!v.saved}">
+        <lightning:recordEditForm
+                                  onload="{!c.handleLoad}"
+                                  onsubmit="{!c.handleSubmit}"
+                                  onsuccess="{!c.handleSuccess}"
+                                  objectApiName="Laptop_Brand__c">
+            <lightning:messages />
+            
+            <lightning:inputField fieldName="Name" />
+            <lightning:inputField fieldName="ramsoftsquare__Offer__c" />
+            <lightning:inputField fieldName="ramsoftsquare__Model_Number__c" />
+            <lightning:inputField fieldName="ramsoftsquare__Price__c" />
+          	
+            <div class="slds-m-top_medium">
+                <lightning:button disabled="{!v.disabled}" variant="brand" type="submit" name="save" label="Save" />
+            </div>
+        </lightning:recordEditForm>
+        <aura:set attribute="else">
+            <p>Saved! New record id is {!v.recordId}</p>
+        </aura:set>
+    </aura:if>-->
+</aura:component>

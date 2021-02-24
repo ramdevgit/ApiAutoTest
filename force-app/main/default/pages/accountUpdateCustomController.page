@@ -1,0 +1,34 @@
+<apex:page controller="AccountController" lightningStyleSheets="true" >
+  <head>
+          <apex:includeScript value="{! $Resource.jQuery }"/>
+          <apex:includeScript value="{!$Resource.dataTable}"/>
+          <apex:stylesheet value="{!$Resource.dataTablecss}"/>
+  </head>
+  <apex:form >
+     <apex:pageBlock >
+        <apex:commandButton action="{!getAccounts}" value="ViewAccounts"  />
+          <apex:pageBlockTable value="{!accountList}" var="account">
+             
+            <apex:column headervalue="Account Id" >
+            <apex:outputLink value="/{!account.id}">
+            <apex:outputField value="{!account.id}"/>
+            </apex:outputLink>
+            </apex:column>
+            <apex:column headervalue="Account Name"  value="{!account.Name}"  id="accName"> 
+            </apex:column>            
+            <apex:column headervalue="Shipping City" value="{!account.ShippingCity}" >
+            </apex:column>
+            <apex:column headervalue="Shipping Country" value="{!account.ShippingCountry}">
+            </apex:column>
+            <apex:column headervalue="Phone"  value="{!account.Phone}" >
+            </apex:column> 
+            <apex:column >
+            <apex:outputLink title="" value="/{!account.id}/e?retURL=/apex/{!$CurrentPage.Name}" >Edit</apex:outputLink>
+            </apex:column>  
+  </apex:pageBlockTable>
+        
+       
+    </apex:pageBlock>  
+  </apex:form>       
+    
+</apex:page>

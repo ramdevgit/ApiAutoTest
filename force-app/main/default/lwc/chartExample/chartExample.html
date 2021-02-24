@@ -1,0 +1,32 @@
+<template>
+  <div class="slds-grid">
+      
+    <div class="slds-col">
+   
+        <lightning-combobox
+            name="state"
+            label="Status"
+            value={state}
+            placeholder="Select Progress"
+            options={stateOptions}
+            onchange={handleChange} >
+        </lightning-combobox>
+    </div>
+    <!--<div class="slds-col">
+            
+        <lightning-combobox
+            name="district"
+            label="Status"
+            value={value}
+            placeholder="Select Progress"
+            options={districtOptions}
+            onchange={handleChange} >
+        </lightning-combobox>
+    </div>-->
+     
+  </div>
+    <lightning-card title="Covid 19 Statistics" >
+        <div class="chart">
+        </div>
+    </lightning-card>  
+</template>

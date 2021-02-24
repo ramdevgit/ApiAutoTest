@@ -1,0 +1,81 @@
+<apex:page controller="AccountController" lightningStylesheets="true" id="AccountPage">
+<apex:slds />
+  
+  <body class="slds-scope">
+      <form id="AccountForm">
+        <div class="slds-card slds-align_absolute-center">
+           <div class="slds-card__body slds-card__body_inner">
+                 <div class="slds-card__header slds-grid">
+                     <span>Account</span>
+                 </div>
+                <div class="slds-form-element ">
+                      <label class="slds-form-element__label" for="accName">
+                          <abbr class="slds-required" title="required">* </abbr> Account Name</label>
+                      <div class="slds-form-element__control ">
+                            <input type="text" id="accName" placeholder="Please Enter Account Name" class="slds-input slds-size_small " />
+                      </div>
+                       <label class="slds-form-element__label" for="country">Shipping Country</label>
+                      <div class="slds-form-element__control">
+                            <input type="text" id="country" placeholder="Please Enter Shipping Country" class="slds-input slds-size_small" />
+                      </div>
+                       <label class="slds-form-element__label" for="city">Shipping City</label>
+                      <div class="slds-form-element__control">
+                            <input type="text" id="city" placeholder="Please Enter Shipping City" class="slds-input slds-size_small" />
+                      </div>
+                       <label class="slds-form-element__label" for="street">
+                           <abbr class="slds-required" title="required">* </abbr>Shipping Street</label>
+                      <div class="slds-form-element__control ">
+                            <input type="text" id="street" placeholder="Please Enter Shipping Street" class="slds-input slds-size_small " />
+                      </div>
+                       <label class="slds-form-element__label" for="street">Phone</label>
+                      <div class="slds-form-element__control">
+                            <input type="text" id="phone" placeholder="Please Enter Shipping Street" class="slds-input slds-size_small" />
+                      </div>
+                      <div id="accountId">
+                      </div>
+                      <button class="slds-button slds-button_success" onclick="saveAccount()">Save</button>
+        
+                 </div>
+            </div>
+       </div>
+     </form>
+  </body>
+   <script type="text/javascript">
+        function saveAccount(){
+                    alert('Account Save Method');
+                    console.log(document.getElementById("accName").value);
+                    console.log(document.getElementById("city").value);
+                    
+                    var accName = document.getElementById("accName").value;
+                    var ShippingCity = document.getElementById("city").value;
+                    var ShippingCountry = document.getElementById("country").value;
+                    var ShippingStreet = document.getElementById("street").value;
+                    var accPhone = document.getElementById("phone").value;
+                    console.log(accName, ShippingCity,  ShippingCountry, ShippingStreet, accPhone );
+                    alert('Account was save Progress');
+
+                   Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.AccountController.saveAccount}',accName, ShippingCity, ShippingCountry, ShippingStreet, accPhone,
+                            function(result, event){
+                            console.log('---result'+ result);
+                                    if(event.status){
+                                     console.log('---result'+ result);
+                                     alert('---result'+ result);
+                                     var accId= document.createElement("p");
+                                     var accNode= document.createTextNode("Account Id                  "+ result);
+                                     accId.appendChild(accNode); 
+                                     var element = document.getElementById("accountId");
+                                     element.appendChild(accId);
+                                    }
+                                     
+                                   
+                                   
+                            },
+                            {escape : true} 
+                            );
+                    
+
+                    alert('Account was save Done');
+
+        }
+    </script>  
+</apex:page>

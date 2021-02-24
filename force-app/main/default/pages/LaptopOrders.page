@@ -1,0 +1,14 @@
+<apex:page controller="ViewLaptopOrders">
+  <apex:form >
+      <apex:inputCheckbox />
+      <apex:pageBlock >
+          <apex:pageBlockTable value="{!laptopOrders}" var="laptopOrder">
+                <apex:column value="{!laptopOrder.Id}"/>
+                <apex:column value="{!laptopOrder.Name}"/>
+                <apex:column value="{!laptopOrder.Laptop_Brands__r.Name}"/>
+                <apex:column value="{!laptopOrder.Laptop_Customer__r.Customer_Name__c}"/> 
+                <apex:column value="{!laptopOrder.Order_Price__c}"/>
+           </apex:pageBlockTable>
+      </apex:pageBlock>
+  </apex:form>
+</apex:page>

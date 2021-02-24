@@ -1,0 +1,268 @@
+<apex:page >
+   <head>
+        <apex:includeScript value="{! $Resource.jQuery }"/>
+        <apex:includeScript value="{!$Resource.dataTable}"/>
+        <apex:stylesheet value="{!$Resource.dataTablecss}"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <style>
+        
+            span{
+                color : red;
+             }
+           .split {
+                  height: 100%;
+                  width: 50%;
+                  position: fixed;
+                  z-index: 1;
+                  top: 0;
+                  overflow-x: hidden;
+                  padding-top: 20px;
+           }
+                
+         .left {
+                  left: 5%;
+                 
+          }
+                
+        .right {
+                  right: 5%;
+         }
+                
+         .centered {
+                  position: absolute;
+                  top: 50%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+                  text-align: center;
+        }
+        
+        .top{
+             padding-top : 50px;
+        }
+        </style>
+   </head>
+   <apex:slds />     
+        <body class="slds-scope" ng-app="accountApp" ng-controller="accountController" ng-init='disableElement();'>
+      <form id="AccountForm">
+        <div class="slds-card slds-align_absolute-center">
+           <div class="slds-card__body slds-card__body_inner">
+                
+                <div id="clonableDiv" class="split left">
+                     <div class="slds-card__header slds-grid">
+                         <p>Account</p>
+                     </div>
+                    <div class="slds-form-element slds-text-color_default ">
+                          <label class="slds-form-element__label " for="first_name">
+                              <abbr class="slds-required  " title="required" display="none">* </abbr> First Name</label>
+                          <div class="slds-form-element__control ">
+                                <input type="text" ng-model="firstName" ng-change="firstNameAddFullName()" ng-keyup="firstNameKeyup()" ng-pattern="/^[a-zA-Z\s]*$/"  id="first_name" placeholder="Please Enter First Name" class="slds-input slds-size_small " />
+                                <br></br><span id="first_name_span"></span>
+                          </div>
+                           <label class="slds-form-element__label  " for="last_name">
+                           <abbr class="slds-required" title="required">* </abbr>Last Name</label>
+                          <div class="slds-form-element__control ">
+                                <input type="text" id="last_name" ng-model="lastName" ng-keyup="lastNameKeyup()" ng-change="lastNameAddFullName()" placeholder="Please Enter Last Name" class="slds-input slds-size_small" />
+                                 <br></br><span id="last_name_span"></span>
+                          </div>
+                           <label class="slds-form-element__label " for="full_name">
+                            <abbr class="slds-required" title="required">* </abbr>Full Name</label>
+                          <div class="slds-form-element__control">
+                                <input type="text" id="full_name"  ng-model="fullName" class="slds-input slds-size_small " ng-disabled="fullNameDisabled"/>
+                          </div>
+                           <label class="slds-form-element__label " for="emailId">
+                               <abbr class="slds-required" title="required">* </abbr>Email ID</label>
+                          <div class="slds-form-element__control  ">
+                                <input type="text" id="emailID" placeholder="Please Enter Email Id" class="slds-input slds-size_small " />
+                                <br></br><span id="emailID_span"></span>
+                          </div>
+                           <label class="slds-form-element__label  " for="phone"> 
+                           <abbr class="slds-required" title="required">* </abbr>Phone</label>
+                          <div class="slds-form-element__control ">
+                                <input type="text" id="phone" ng-model="phone" ng-keyup="phoneKeyup()" ng-blur="checkValidPhoneNum()" placeholder="Please Enter Phone Number" class="slds-input slds-size_small " />
+                                 <br></br><span id="phone_span"></span>
+                          </div>
+                          <label class="slds-form-element__label " for="dob">
+                           <abbr class="slds-required" title="required">* </abbr>Date Of Birth</label>
+                          <div class="slds-form-element__control ">
+                                <input type="date" id="dob" ng-model="dob" ng-blur="dobSelect()" class="slds-input slds-size_small" />
+                                <br></br><span id="dob_span"></span>
+                          </div>
+                          <label class="slds-form-element__label " for="age">
+                              <abbr class="slds-required" title="required">* </abbr>Age</label>
+                          <div class="slds-form-element__control ">
+                                <input type="text" id="age"  class="slds-input slds-size_small" ng-model="age" ng-disabled="ageDisabled" />
+                          </div>
+                          <label class="slds-form-element__label " for="country">
+                              <abbr class="slds-required" title="required">* </abbr>Country</label>
+                          <div class="slds-form-element__control ">
+                                <select id="country" ng-model="country" ng-change="selectCountry()">
+                                <option selected="true" disabled="true">Choose Country</option>
+                                <option value="india">INDIA</option>
+                                <option value="usa">USA</option>
+                              </select>
+                               <br></br><span id="country_span"></span>
+                          </div>
+                          <label class="slds-form-element__label " for="state">
+                              <abbr class="slds-required" title="required">* </abbr>States</label>
+    
+                          <div id="stateDiv" class="slds-form-element__control ">
+                                <select id="state" ng-model="state" ng-change="selectState()">
+                                <option selected="true" disabled="true">Choose States</option>
+
+                              </select>
+                               <br></br><span id="state_span"></span>
+                          </div>    
+                          <label class="slds-form-element__label " for="district">
+                              <abbr class="slds-required" title="required">* </abbr>District</label>
+                          <div class="slds-form-element__control ">
+                                <select id="district" ng-model="district" ng-change="selectDistrict()">
+                                <option selected="true" disabled="true">Choose City</option>
+
+                              </select>
+                               <br></br><span id="district_span"></span>
+                          </div>  
+                               <button class="slds-button slds-button_neutral ">Preview</button>
+                    </div>                        
+                 </div>
+
+            </div>
+            
+       </div>
+       
+     </form>
+     <div id="clonedDiv" class="split right">
+     </div>
+  </body>
+    <script>
+
+            var accApp = angular.module("accountApp", []);
+            accApp.controller("accountController", function($scope){
+
+                $scope.disableElement = function(){
+                    $scope.fullNameDisabled = true;
+                    $scope.ageDisabled = true;
+                }
+                $scope.firstNameAddFullName = function(){
+                    $scope.fullNameDisabled = false;
+                    if($scope.lastName == undefined){
+                       $scope.lastName = " "; 
+                    }
+                    console.log('firstNameAddFullName  ::: firstName  ----', $scope.firstName , 'lastName--', $scope.lastName);
+                    $scope.fullName = $scope.firstName + " "+ $scope.lastName;
+                }
+                
+                $scope.lastNameAddFullName = function(){
+                    $scope.fullNameDisabled = false;
+                    if($scope.firstName == undefined){
+                       $scope.firstName = " "; 
+                    }
+                    console.log('lastNameAddFullName ::: firstName  ----', $scope.firstName , 'lastName--', $scope.lastName);
+                    $scope.fullName = $scope.firstName + "  " + $scope.lastName;
+                }
+                
+               $scope.dobSelect = function(){
+                   $scope.ageDisabled = false;
+                        var currentYear = 0;
+                        var birthdate = new Date($scope.dob);
+                        var today = new Date();
+                        if(today.getMonth() < birthdate.getMonth() ){
+                            currentYear = 1;
+                        }
+                        else if(today.getMonth() == birthdate.getMonth() && today.getDate() < birthdate.getDate()){
+                            curruntYear =1;
+                        }
+                        var currentAge = (today.getFullYear() - birthdate.getFullYear()) - currentYear;
+                        console.log('age-----------------', currentAge);
+                        if(isFutureDate(birthdate)){
+                               console.log('is a future date dob-----------------', currentAge);
+                            document.getElementById('dob_span').innerHTML = "Enter Date less than Today";
+                            $scope.dob = "";
+                            $scope.age = "";
+                            $scope.ageDisabled = true;
+
+                        }  else{
+                            $scope.age = currentAge;
+
+                        }  
+                        
+                        function isFutureDate(dob){
+                            var now = new Date;
+                            var target = new Date(dob);
+                
+                            if (target.getFullYear() > now.getFullYear()) 
+                            {
+                                return true;
+                            } else if(target.getFullYear() == now.getFullYear())  {
+                                    if (target.getMonth() > now.getMonth()) {
+                                        return true;
+                                     }  else if(target.getMonth() == now.getMonth()){
+                                
+                                            if (target.getDate() >= now.getDate()) {
+                                            return true;
+                                            } else{
+                                                return false
+                                                }
+                                        }
+                                
+                                } else{
+                                    return false;
+                                  }
+                      } 
+                           
+                   } 
+                   
+                   $scope.checkValidPhoneNum = function(){
+                       var phoneNum = $scope.phone;
+                       console.log('length of the phone----', phone.length);
+                       if(phoneNum.length < 10 || phoneNum.length >10){
+                            $( "#phone_span" ).text( "Phone Number Should be 10 digits" ).show();  
+                       } else if( phoneNum.length == 10){
+                           $( "#phone_span" ).text( " " ).show();  
+                       }
+                       
+                       
+                   }
+                   
+                   $scope.phoneKeyup = function(){
+                        $('#phone').val($('#phone').val().replace(/[^\d].+/, ""));
+                        if ((event.which < 48 || event.which > 57)) {
+                            event.preventDefault();
+                        }
+                   }
+                   
+                   $scope.firstNameKeyup = function(event){
+                       if ( event.ctrlKey || event.altKey) {
+                          event.preventDefault();
+                      } else {
+                          var key = event.keyCode;
+                          if (!((key == 8) || (key == 32) || (key == 46) || (key >= 35 && key <= 40) || (key >= 65 && key <= 90))) {
+                              event.preventDefault();
+                          }
+                      }
+                   }
+            });
+            $( window ).on( "load", function() {
+                    console.log( "window loaded" );
+                    $('select').addClass('slds-input slds-size_small'); 
+                   
+                    
+                });
+    
+                
+     
+         
+           
+           var country={ "india" :{"Andhra Prathes" :["Anantapur",  "Chittoor", "East Godavari"],
+                                   "Karnataka" : ["Bagalkot","Ballari "]
+                                   },
+                           "usa" : { "Alabama" :["Athens", "Atmore", "Bessemer" ],
+                                      "Alaska" :["Cordova", "Homer", "Nome" ] 
+                                   }
+                      };             
+               
+
+            
+  
+            
+    </script>
+</apex:page>

@@ -1,0 +1,18 @@
+<apex:page >
+    <apex:includeLightning />
+    <div id="lightning" />
+    <script>
+    $Lightning.use("ramsoftsquare:showContactsApp", function() {
+        $Lightning.createComponent("ramsoftsquare:contactListComponent",
+                                   {},
+                                   "lightning",
+                                   function(cmp) {
+                                       console.log("button was created");
+                                       // do some stuff
+                                   }
+                                  );
+        
+        
+    });
+    </script>
+</apex:page>

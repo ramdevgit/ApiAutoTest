@@ -1,0 +1,107 @@
+<aura:component controller="ContactController">
+    
+    <!--Declaration Attributes-->
+    <aura:attribute name="contactRecord" type="Contact"/>
+    <aura:attribute name="accountList" type="List"/>
+    <aura:attribute name="selectedAccount" type="String"/>
+    <aura:attribute name="showAccoutList" type="Boolean" default="false"/>
+    <aura:attribute name="AccountNameReadOnly" type="Boolean" default="true"/>
+    <aura:attribute name="accountSelected" type="Boolean" default=""/>
+    
+    <!--Declare Events-->
+    <aura:registerEvent name="closeEditEvent" type="c:closeEditEvent" />
+    	
+    <!--Declare Handlers-->
+    <aura:handler name="lookupSelect" event="c:sObjectLookupSelectEvent" action="{!c.handleLookupSelectEvent}"
+                  description="Event handler to get the selected record Id and Name from LookupItem component"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    
+    <form class="slds-form--stacked" id="contactform">          
+        
+        <lightning:input aura:id="editform" label="Contact FirstName"
+                         name="contactname"
+                         value="{!v.contactRecord.FirstName}"/>
+        <lightning:input aura:id="editform" label="Contact LastName"
+                         name="contactname"
+                         value="{!v.contactRecord.LastName}"
+                         required="true"/>
+        <div class="slds-form-element">
+            <label class="slds-form-element__label" for="combobox-id-4">Relate to</label>
+            <div class="slds-form-element__control">
+                <div class="slds-combobox_container">
+                    <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open" aria-expanded="true" aria-haspopup="listbox" role="combobox">
+                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                            
+                            <aura:renderIf isTrue="{!v.accountSelected}">
+                                <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left-right" role="none">
+                                    <span class="slds-icon_container slds-icon-standard-account slds-combobox__input-entity-icon" title="Account">
+                                        
+                                    </span>
+                                    <input type="text" class="slds-input slds-combobox__input slds-combobox__input-value" id="combobox-id-5" aria-controls="listbox-id-5" autoComplete="off" role="textbox" placeholder="Select an Option" readonly="{!v.AccountNameReadOnly}" value="{!v.contactRecord.AccountName}"
+                                           />
+                                    <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" title="Remove selected option" onclick="{!c.selectAccountHideExist}">
+                                        
+                                        <lightning:icon iconName="utility:edit" alternativeText="edit" variant="edit" size="small"/>
+                                        
+                                    </button>
+                                </div>
+                                <aura:set attribute="else">
+                                    <input type="text" id="accountName" class="slds-input slds-combobox__input slds-has-focus slds-combobox__input-value"  aria-activedescendant="option1" aria-autocomplete="list" aria-controls="listbox-id-4" autoComplete="off" role="textbox" placeholder="Search..."
+                                           value="" oninput="{!c.searchAccounts}"/>
+                                </aura:set>
+                            </aura:renderIf>
+                        </div>
+                        
+                        <!-- <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                               <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
+                                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+                                </svg>
+                           </span>-->
+                        
+                        
+                    </div>
+                    
+                    <aura:renderIf isTrue="{!v.showAccoutList}">
+                        <div id="listbox-unique-id" role="listbox">
+                            <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid" role="presentation">
+                                <aura:iteration var="account" items="{!v.accountList}">
+                                    <c:sObjectLookupItem record="{!account}" />
+                                </aura:iteration>
+                            </ul>
+                        </div>
+                        
+                    </aura:renderIf>
+                </div>
+            </div>
+        </div>
+       
+        
+        <lightning:input type="date"
+                         aura:id="editform" 
+                         label="Activation Date"
+                         name="activationdate"
+                         value="{!v.contactRecord.ramsoftsquare__Activation_Date__c}"
+                         formatter="text" />
+        <lightning:input type="checkbox" 
+                         aura:id="editform" 
+                         label="Primary Contact"
+                         name="primarycontact"
+                         value="{!v.contactRecord.ramsoftsquare__Is_Primary_Contact__c}"/>
+        <lightning:input type="currency" aura:id="editform" label="Price"  
+                         name="Price"
+                         value="{!v.contactRecord.ramsoftsquare__Price__c}"/>
+        <lightning:input type="currency" aura:id="editform" label="Country"  
+                         name="Country"	
+                         value="{!v.contactRecord.ramsoftsquare__Country__c}"/>
+        
+        <lightning:button label="Save" 
+                          class="slds-m-top--medium"
+                          variant="brand"
+                          onclick="{!c.saveRecord}"/>
+        <lightning:button label="Cancel" 
+                          class="slds-m-top--medium"
+                          variant="brand"
+                          onclick="{!c.cancel}"/>
+    </form>
+</aura:component>

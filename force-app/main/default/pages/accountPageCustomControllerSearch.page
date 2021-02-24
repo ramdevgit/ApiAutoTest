@@ -1,0 +1,109 @@
+<apex:page controller="AccountController" id="AccountPage">
+    <head>
+    <style>
+            table{
+                border-collapse: collapse;
+                width : 100%;
+            }
+            th{
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #808080;
+                color: white;            
+            }
+            
+             td, th {
+               border: 1px solid #ddd;
+               padding: 8px;
+            }
+            
+            tr:nth-child(even){
+                background-color: #f2f2f2;
+           }
+            
+           tr:hover {
+                 background-color: #ddd;
+            }
+            
+    </style>
+    </head>
+
+    <apex:form id="AccountForm" >
+        <apex:includeScript value="{! $Resource.jQuery }"/>
+        <apex:includeScript value="{!$Resource.dataTable}"/>
+        <apex:stylesheet value="{!$Resource.dataTablecss}"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+        
+        
+         <div ng-app="accountApp">
+               <div ng-controller="AngularAccountController">
+                  
+                  Account Name <input type="text"   ng-change="getAccounts(accName)" ng-model="accName" />
+                   <table  id="accTable">
+                       <thead>
+                           <tr>
+                               <th>Account Name</th>
+                               <th>Shipping Country</th>
+                               <th>Shipping City</th>
+                               <th>Shipping Street</th>
+                               <th>Phone</th>
+                           </tr>
+                       </thead>
+                       <tbody >
+                           
+                       </tbody>
+                   </table>
+               </div>
+           </div>        
+        
+          <script>
+          $(document).ready(function(){
+                 
+          });     
+                
+        var accountApp = angular.module('accountApp', []);
+        accountApp.controller('AngularAccountController', function($scope){
+                    $scope.getAccounts = function(accName){
+                           if($scope.accName != '' && $scope.accName != 'undefined' ){
+                                  console.log('accoun Name--', $scope.accName);
+                                   AccountController.searchAccountAngular(accName,
+                                        function(result, event){
+                                        
+                                                if(event.status){
+                                                    console.log('value----', JSON.parse(result));
+                                                    
+                                                    $('#accTable').DataTable({
+                                                      destroy : true,
+                                                      aaData : JSON.parse(result),
+                                                      "columns": [
+                                                                  {"data" : "Name", "defaultContent": ""},
+                                                                  {"data" : "ShippingCountry", "defaultContent": ""},
+                                                                  {"data" : "ShippingCity", "defaultContent": ""},
+                                                                  {"data" : "ShippingStreet", "defaultContent": ""},
+                                                                  {"data" : "Phone", "defaultContent": ""}    
+                                                                  ]                                                        
+                                                                
+                                                   });    
+                                                   
+                                                }
+                                                
+                                      },{escape : false} 
+                                   ); 
+                    }    else{
+                                console.log('else---', $('#accTable'));
+                                 $('#accTable').DataTable({
+                                       aaData : [],
+                                       destroy : true
+                                });
+                            }           
+                    }
+                    
+                });
+       
+    </script>  
+           
+     
+    </apex:form>  
+</apex:page>

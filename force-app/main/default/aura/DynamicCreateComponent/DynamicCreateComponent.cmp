@@ -1,0 +1,13 @@
+<aura:component implements="force:lightningQuickAction">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:button variant="brand" label="Create Component" onclick="{! c.handleComponent }" />
+    <!--<div onmouseover="{!c.handlePress}" aura:id="findableAuraId">
+        <lightning:button label="Press Me"  onclick="{!c.handlePress}" />
+    </div>-->
+    <lightning:button variant="brand" label="Destroying Component" onclick="{! c.handleDestroy }" />
+    <lightning:button variant="brand" label="Destroying Component with facet" onclick="{! c.handleDestroywithfacet }" />
+    <lightning:button variant="brand" label="Lightning Quick Actoin" onclick="{!c.lightningQuickCancel}"/>
+    <p>Dynamically created button</p>
+    {!v.body}
+    
+</aura:component>

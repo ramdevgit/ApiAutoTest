@@ -1,0 +1,9 @@
+<aura:component extends="c:ParentInheritanceComponent">
+    <aura:attribute name="countryParam" type="String"/>
+	 <div class="slds-align_absolute-center">
+    	  {!v.body}
+          {!v.countryParam}			
+    </div>
+    <c:ApexService aura:id="apexServiceCmp"/>
+    
+</aura:component>

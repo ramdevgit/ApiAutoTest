@@ -1,0 +1,49 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    
+    <aura:html tag="style">
+        .slds-modal__container {
+             width : 80% !important;
+             max-width : 80% !important;
+         }
+    </aura:html>
+   <!--<ltng:require styles="{!$Resource.ChartJs+ '/Chart.css'}" />
+    <ltng:require scripts="{!join(',', 
+                           $Resource.ChartJs+ '/Chart.js', 
+                           $Resource.ChartJs+ '/Chart.min.js')}" 
+                  afterScriptsLoaded="{!c.loadedChartjs}" />
+    
+    <div class="slds-grid">
+        <div class="slds-col">
+            <lightning:button variant="base" value="pie" label="Pie" title="Base action" onclick="{! c.handleClick }"/>
+            
+        </div>
+        <div class="slds-col">
+            <lightning:button variant="base" value="bar" label="Bar" title="Base action" onclick="{! c.handleClick }"/>
+            
+        </div>
+        <div>
+            <lightning:button variant="base" value="horizontalBar" label="Horizontal Bar" title="Base action" onclick="{! c.handleClick }"/>
+            
+        </div>
+        <div class="slds-col">
+            <lightning:button variant="base" value="line" label="Line" title="Line" onclick="{! c.handleClick }"/>
+            
+        </div>
+        <div class="slds-col">
+            <lightning:button variant="base" value="doughnut" label="doughnut" title="Base action" onclick="{! c.handleClick }"/>
+            
+        </div>
+        <div class="slds-col">
+            <lightning:button variant="base" value="radar" label="radar" title="Base action" onclick="{! c.handleClick }"/>
+            
+        </div>
+        <div class="slds-col">
+            <lightning:button variant="base" value="polarArea" label="polarArea" title="Base action" onclick="{! c.handleClick }"/>
+            
+        </div>
+        
+    </div>   
+    
+    <canvas id="pie-chart" width="950" height="250"></canvas>-->
+	<c:chartExample></c:chartExample>   
+</aura:component>

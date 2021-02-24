@@ -1,0 +1,21 @@
+<template>
+<lightning-card title="ApexWireMethodWithParams" >
+    <lightning-input type="search" onchange={handleKeyChange} class="slds-m-bottom_small" label="Search" value={searchKey}></lightning-input>
+    <lightning-input type="search Account Name Contacts" onchange={getContactsFromAccountName} class="slds-m-bottom_small" label="Search" value={searchName}></lightning-input>
+<template if:true={singleAccount}>
+    <div> Problem is here ! {singleAccount.Name}</div>
+    </template> 
+    <template for:each={accountList} for:item="acc">
+    Account<p key={acc.Id}>{acc.Name}</p>
+    </template>
+<template if:true={showContacts}>
+    <p>showContacts</p>
+        <lightning-datatable
+        key-field="id"
+        data={contactList}
+        columns={columnList}
+        >
+        </lightning-datatable>
+</template> 
+</lightning-card>
+</template>

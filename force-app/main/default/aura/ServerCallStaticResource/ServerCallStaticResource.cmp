@@ -1,0 +1,10 @@
+<aura:component controller="AccountController">
+    <ltng:require scripts="{!$Resource.getAccountSource}" afterScriptsLoaded="{!c.afterScriptsLoaded}"/>
+    <aura:attribute name="account" type="List"/>
+    <lightning:select label="LeadSource">
+        <option>----</option>
+        <aura:iteration items="{!v.account}" var="pick">
+            <option value="{!pick}" text="{!pick}"></option>
+        </aura:iteration>
+    </lightning:select>
+</aura:component>

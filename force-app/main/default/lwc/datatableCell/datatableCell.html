@@ -1,0 +1,75 @@
+<template>
+  <!--Table cell component it holds input/output based on column definition-->
+  <div class={formattedCellClass}>
+    <!--Editable fields standard/custom component we can use it here-->
+    <template if:true={isEditable}>
+
+      <lightning-input if:true={formattedData.isCurrency} name={formattedData.fieldName} type="number" label=""
+        variant="label-hidden" required={formattedData.isRequired} value={formattedData.value} formatter="currency" step="0.01" onblur={handleDataChange}>
+      </lightning-input>
+      <lightning-input if:true={formattedData.isDate} date-style="short" type="date" name={formattedData.fieldName}
+        label="" variant="label-hidden" value={formattedValue} onchange={handleDataChange} required={formattedData.isRequired}
+        min={formattedData.dateAttributes.minDate} max={formattedData.dateAttributes.maxDate}></lightning-input>
+      <lightning-combobox if:true={formattedData.isPicklist} name={formattedData.fieldName}
+        dropdown-alignment="top-left" value={formattedData.value} placeholder="Select" variant="label-hidden"
+        options={formattedData.options} size="small" onchange={handleDataChange}>
+      </lightning-combobox>
+      <lightning-input if:true={formattedData.isNumber} name={formattedData.fieldName} type="number" label=""
+      variant="label-hidden" value={formattedData.value} step="0.01" onblur={handleDataChange} >
+    </lightning-input>
+      <lightning-input if:true={formattedData.isCheckbox} type="checkbox" label="" name={formattedData.fieldName}
+        checked={formattedData.value} value={formattedData.value} onchange={handleDataChange}></lightning-input>
+      <template if:true={formattedData.isIconCheckbox}>
+        <span onclick={handleDataCheckboxChange}>
+          <template if:true={formattedData.value}>
+            <img src={formattedData.iconCheckboxWhenTrue} width="19rem">
+          </template>
+          <template if:false={formattedData.value}>
+            <img src={formattedData.iconCheckboxWhenFalse} width="19rem" style="opacity:0.6">
+          </template>
+        </span>
+      </template>
+      <!--If this cell has tree it will invoke as tree cell-->
+      <template if:true={isTree}>
+        <div class="slds-tree__item" style="padding:0" onclick={onTreeClick}>
+          <template if:true={isExpanded}>
+            <lightning-icon icon-name="utility:chevrondown" size="xx-small" alternative-text="Event"></lightning-icon>
+          </template>
+          <template if:false={isExpanded}>
+            <lightning-icon icon-name="utility:chevronright" size="xx-small" alternative-text="Event"></lightning-icon>
+          </template>
+          <span class="slds-has-flexi-truncate">
+            <span class="slds-tree__item-label slds-truncate slds-p-left_xxx-small" title="Tree Branch">
+              {formattedData.value}</span>
+          </span>
+        </div>
+      </template>
+    </template>
+    <!--Output fields we can use standard/custom component-->
+    <template if:false={isEditable}>
+      <lightning-layout>
+        <lightning-layout-item size={layoutEditSize}>
+          <div class={editableCls} onclick={enableEdit}>
+            <lightning-formatted-number class="" if:true={formattedData.isCurrency} value={formattedValue}
+              format-style="currency" currency-code="USD">
+            </lightning-formatted-number>
+            <lightning-formatted-text if:true={isText} class="" value={formattedValue}></lightning-formatted-text>
+            <lightning-formatted-number if:true={formattedData.isNumber} class="slds-truncate" value={formattedValue}>
+            </lightning-formatted-number>
+            <lightning-input if:true={formattedData.isCheckbox} type="checkbox" label="" variant="label-hidden"
+              name={formattedData.fieldName} checked={formattedValue}  disabled></lightning-input>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item size="2" class="slds-p-right--x-small">
+          <span onclick={enableEdit}>
+            <template if:true={editOrNot}>
+              <lightning-icon icon-name="utility:edit"
+                class="slds-button__icon slds-button__icon_edit slds-cell-edit__button slds-m-left_xxx-small"
+                size="xx-small" alternative-text="Utility Edit"></lightning-icon>
+            </template>
+          </span>
+        </lightning-layout-item>
+      </lightning-layout>
+    </template>
+  </div>
+</template>

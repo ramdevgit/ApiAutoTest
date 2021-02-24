@@ -1,0 +1,15 @@
+<apex:page controller="ViewLaptopCustomers">
+    <apex:form >
+        <apex:pageBlock >
+           <apex:commandButton value="Display" action="{!getLaptopCustomers}"/>
+            <apex:pageBlockTable value="{!laptopCustomers}" var="laptopCustomer">
+                <apex:column value="{!laptopCustomer.Id}"/>
+                <apex:column value="{!laptopCustomer.Name}"/>
+                <apex:column value="{!laptopCustomer.Customer_Name__c}"/>
+                <apex:column value="{!laptopCustomer.Phone_Number__c}"/> 
+                <apex:column value="{!laptopCustomer.Email_Id__c}"/>
+                <apex:column value="{!laptopCustomer.Address_City__c}"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>    
+    </apex:form>
+</apex:page>

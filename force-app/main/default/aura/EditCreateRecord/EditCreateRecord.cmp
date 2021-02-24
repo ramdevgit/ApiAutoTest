@@ -1,0 +1,45 @@
+<aura:component controller="ContactController">
+    <aura:attribute name="record" type="Contact" default="{'sobjectType':'Contact',
+                                                          'LastName':'',
+                                                          'Email':'',
+                                                          'LeadSource':'',
+                                                          'Department':''}" />
+    <aura:attribute name="wrapperClass" type="Object" />
+    
+    
+    
+    <!--Declare Handler-->
+    
+    <aura:handler name="init" value="{!this}" action="{! c.doInit}"/>
+    <!--Declare Events-->
+    <aura:registerEvent name="closeEditEvent" type="c:closeEditEvent" />
+    
+    <form class="slds-form--stacked" id="contactform">          
+        
+        <lightning:input type="text"
+                         aura:id="editform" 
+                         label="Contact LastName"
+                         name="contactname"
+                         value="{!v.record.LastName}"
+                         required="true"/>
+        <lightning:input type="Email"
+                         aura:id="editform"
+                         label="Email"
+                         name="contactname"
+                         value="{!v.record.Email}"
+                         />
+        <lightning:select  aura:id="selectLeadSource"  value="{!v.record.LeadSource}" label="" onchange="{!c.leadResourceChange}">
+            <aura:iteration items="{!v.wrapperClass.leadSource}" var="source">
+                <option aura:id="leadSource" value="{!source}" text="{!source}"></option>
+            </aura:iteration>
+        </lightning:select>
+        
+        <lightning:input type="text"
+                         aura:id="editform" 
+                         label="Department"
+                         name="contactname"
+                         value="{!v.record.Department}"
+                         />
+        <lightning:button name="saveButton" label="Save" onclick="{! c.saveContactRecord}"/>
+    </form>
+</aura:component>

@@ -1,0 +1,171 @@
+<aura:component controller="PricebookEntryController" implements="lightning:availableForFlowScreens">
+    
+    <aura:attribute name="priceBookId" type="String" default=""/>
+    <aura:attribute name="opportunityId" type="String" default=""/>
+    
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="selectedRows" type="List" access="PRIVATE"/>
+    <aura:attribute name="showOrderLineItem" type="Boolean" access="public" default="false"/>
+    
+    <!-- pagination attributes -->
+    <aura:attribute name="allData" type="List"/>
+    <aura:attribute name="selectedRowsIds" type="List" />
+    <aura:attribute name="selection" type="List" />
+     <aura:attribute name="hasPageChanged" type="Boolean" />
+    <aura:attribute name="initialLoad" type="Boolean" default="true"/>
+    <aura:attribute name="currentPageNumber" type="Integer" default="1"/>
+    <aura:attribute name="pageSize" type="Integer" default="10"/>
+    <aura:attribute name="totalPages" type="Integer" default="0"/>
+    <aura:attribute name="pageList" type="List"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c. doInit}"/>
+    <aura:attribute name="selectedLineItems" type="List"/>
+    
+    <!-- the container element determine the height of the datatable -->
+    <aura:if isTrue="{!v.showOrderLineItem}">
+        <lightning:card title="" iconName="" footer="">
+            
+            <p class="slds-p-horizontal_small">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-border_left slds-border_right">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Product">Product</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Quantity">
+                                    <abbr class="slds-required" title="required">* </abbr>Quantity
+                                </div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="List Price">
+                                    <abbr class="slds-required" title="required">* </abbr>List Price
+                                </div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Sales Price">
+                                    <abbr class="slds-required" title="required">* </abbr>Sales Price
+                                </div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Line Description">Line Description</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.selectedLineItems}" var="row" indexVar="index">
+                            <tr class="">
+                                <td >
+                                    <div class="slds-truncate " title="">
+                                        <ui:outputText value="{!row.Product2Name}"/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="" title="">
+                                        <lightning:input variant="label-hidden" aura:id="fieldId" type="number"  value="{!row.Quantity}" required="true"/>
+                                    </div>
+                                </td>
+                                <td >
+                                    <div class="slds-truncate" title="">
+                                        <lightning:input aura:id="fieldId" variant="label-hidden" type="number"   value="{!row.ListPrice}" formatter="currency" step="0.01" required="true"/>
+                                    </div>
+                                </td>
+                                <td >
+                                    <div class="slds-truncate" title="">
+                                        <lightning:input aura:id="fieldId" variant="label-hidden" type="number"  value="{!row.UnitPrice}" formatter="currency" step="0.01" required="true"/>
+                                    </div>
+                                </td>
+                                
+                                <td >
+                                    <div class="slds-truncate" title="">
+                                        <lightning:input aura:id="fieldId" variant="label-hidden"  type="text" value="{!row.Description}"  />                            </div>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+            </p>
+            <div class="slds-p-around_medium slds-form">
+                <div class="slds-form-element slds-float_right">
+                    <lightning:button label="Previous" onclick="{! c.showAddProducts }" />
+                    <lightning:button  label="Save Line Item" variant="brand" onclick="{! c.saveOrderLineItem }" />
+                </div>
+            </div>
+        </lightning:card>
+        
+        
+        <aura:set attribute="else">
+            <lightning:card title="" iconName="" footer="">
+                <p class="slds-p-horizontal_small">
+                    <div class="slds-clearfix">
+                        <div class="slds-float_left slds-size_1-of-12">
+                            <lightning:select label="Page size" name="selectPageSize" onchange="{!c.updateTable}" value="{!v.pageSize}">
+                                <option selected="selected" itemValue="10" value="10">10</option>
+                                <option itemValue="25" value="25">25</option>
+                                <option itemValue="50" value="50">50</option>
+                                <option itemValue="100" value="100">100</option>
+                                <option itemValue="200" value="200">200</option>
+                            </lightning:select>
+                        </div>
+                        <lightning:input onchange="{!c.searchTable}" type="search" label="Searh" variant="label-hidden" placeholder="Search Products" aura:id="SearchBox" class="slds-float_right slds-size_3-of-12" />
+                    </div>
+                    <div style="height: 300px">
+                        <lightning:datatable
+                                             aura:id ="productTable"
+                                             columns="{! v.columns }"
+                                             data="{! v.data }"
+                                             keyField="id"
+                                             hideCheckboxColumn="false" 
+                                             onrowselection ="{!c. handleSelect}"                
+                                             selectedRows="{! v.selectedRows }"
+                                             showRowNumberColumn="true"
+                                             maxRowSelection="{! v.maxRowSelection }"
+                                             />
+                    </div>
+                    
+                </p>
+                <div style="padding-top: 1rem;">
+                    <lightning:layout multipleRows="true" horizontalAlign="center">
+                        <lightning:layoutItem padding="around-small" flexibility="auto">
+                            <lightning:button label="First" iconName="utility:left" iconPosition="left"
+                                              onclick="{!c.onFirst}" disabled="{! v.currentPageNumber == 1}"/>
+                            <lightning:button iconName="utility:chevronleft" iconPosition="left"
+                                              onclick="{!c.onPrev}" disabled="{! v.currentPageNumber == 1}"/>
+                            <span class="slds-p-horizontal_x-small">
+                                <lightning:button onclick="{!c.selectedPagination}" name="1" 
+                                                  class="{! (v.currentPageNumber == 1) ? 'selected selectedPage' : ''}" label="1" />
+                            </span>
+                            <span class="slds-p-horizontal_xxx-small">
+                                <a>...</a>
+                            </span>
+                            <aura:iteration items="{!v.pageList}" var="item">
+                                <span class="slds-p-horizontal_x-small">
+                                    <lightning:button onclick="{!c.selectedPagination}" name="{!item}"
+                                                      class="{! (v.currentPageNumber == item) ? 'selected selectedPage' : ''}" label="{!item}" />
+                                </span>
+                            </aura:iteration>
+                            <span class="slds-p-horizontal_xxx-small">
+                                <a>...</a>
+                            </span>
+                            <span class="slds-p-horizontal_x-small">
+                                <lightning:button onclick="{!c.selectedPagination}" name="{!v.totalPages}"
+                                                  class="{! (v.currentPageNumber == v.totalPages) ? 'selected' : ''}" label="{!v.totalPages}" />
+                            </span>
+                            <lightning:button iconName="utility:chevronright" iconPosition="right" 
+                                              disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.onNext}"/>
+                            <lightning:button label="Last" iconName="utility:right" iconPosition="right" 
+                                              disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.onLast}"/>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </div>
+                <div class="slds-p-around_medium slds-form ">
+                    <div class="slds-form-element slds-float_right">
+                        <lightning:button label="Cancel"  variant="brand" onclick="{! c.navigateToOpportunity }"  />
+                        <lightning:button label="Next" variant="brand"  onclick="{! c.addProductsToOpporunity }"  />
+                    </div>
+                </div>
+            </lightning:card>
+        </aura:set>
+    </aura:if>
+</aura:component>

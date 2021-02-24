@@ -1,0 +1,13 @@
+<aura:component>
+    <aura:attribute name="msg" type="String"></aura:attribute>
+    <div><b>{!v.msg}</b></div>
+    <aura:attribute name="truthy" type="Boolean" default="true"></aura:attribute>
+     
+    <aura:if isTrue="{!v.truthy}">
+        <c:RendererExample/>	
+    <aura:set attribute="else">
+        SecondComponent is Deleted
+    </aura:set>
+    </aura:if>
+    <ui:button aura:id="button" label="Check" press="{!c.update}"/>
+</aura:component>

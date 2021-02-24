@@ -1,0 +1,36 @@
+<apex:component >
+          <apex:attribute name="accountName" description="This is the value for the component." type="String" required="true"/>
+          <apex:attribute name="shippingCountry" description="This is the value for the component." type="String" required="true"/>
+          <apex:attribute name="shippingCity" description="This is the value for the component." type="String" required="true"/>
+          <apex:attribute name="shippingStreet" description="This is the value for the component." type="String" required="true"/>
+          <apex:attribute name="phone" description="This is the value for the component." type="String" required="true"/>
+
+  <head>
+          <apex:includeScript value="{! $Resource.jQuery }"/>
+          <apex:includeScript value="{!$Resource.dataTable}"/>
+          <apex:stylesheet value="{!$Resource.dataTablecss}"/>
+  </head>
+  
+    <apex:form >
+     <apex:pageBlock title="Account">
+      
+          <apex:pageBlockSection title="Company Details">
+              <apex:inputText value="{!accountName}"/>
+          </apex:pageBlockSection>
+          <apex:pageBlockSection title="Address Details">
+              <apex:inputText value="{!shippingCountry}"/>
+              <apex:inputText value="{!shippingCity}"/>
+              <apex:inputText value="{!shippingStreet}"/>
+
+          </apex:pageBlockSection>
+          <apex:pageBlockSection title="Contact Details">
+              <apex:inputText value="{!phone}"/>
+          </apex:pageBlockSection>
+ 
+          
+          <apex:commandButton action="{!updateRecord}" value="Update" />
+        </apex:pageBlock>
+ 
+     </apex:form>         
+
+</apex:component>

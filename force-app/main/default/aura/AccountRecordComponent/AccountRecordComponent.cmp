@@ -1,0 +1,17 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName" access="global" controller="AccountController">
+        
+    <aura:attribute name = "record" type = "Account"/>
+
+    <aura:handler name = "init" value = "{!this}" action = "{!c.fetchAccountInfo}"/>
+  
+    <lightning:card footer="{!v.record.website}" title="{!v.record.Name}">
+        <aura:set attribute="actions">
+            <lightning:button variant="success" label="Edit" onclick="{!c.editRecord}"/>
+        </aura:set>
+        <p class="slds-p-horizontal_small">
+            Type : {!v.record.Type}<br/>
+            Industry:{!v.record.Industry}<br/>
+            Phone :{!v.record.Phone}
+        </p>
+    </lightning:card>
+</aura:component>

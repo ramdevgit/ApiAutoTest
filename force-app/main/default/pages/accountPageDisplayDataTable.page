@@ -1,0 +1,45 @@
+<apex:page controller="AccountController">
+    <apex:form >
+        <apex:includescript value="//code.jquery.com/jquery-1.11.1.min.js" / >
+        <apex:includescript value="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js" />
+        <apex:stylesheet value="//cdn.datatables.net/1.10.4/css/jquery.dataTables.css" />
+       <apex:commandButton action="{!getAccounts}" value="Get Accounts"/>
+            <apex:actionFunction action="{!getAccounts}" name="methodOneInJavascript" rerender="showstate"/>
+        
+              <table id="AccountTable">
+                  <thead>
+                      <th>
+                          <td>Account Name</td>
+                          <td>Shipping Country</td>
+                          <td>Shipping City</td>
+                          <td>Shipping Street</td>
+                          <td>Phone</td>
+                      </th>
+                  </thead>
+                  <tbody>
+                       <apex:repeat value="{!accountList}" var="account">
+                        <tr>
+                            <td>{!account.Name}</td>
+                            <td>{!account.ShippingCountry}</td>
+                            <td>{!account.ShippingCity}</td>
+                            <td>{!account.ShippingStreet}</td>
+                            <td>{!account.Phone}</td>
+                        </tr>
+                    </apex:repeat>
+                  </tbody>
+              </table>
+         
+        
+          <script>
+              
+                j$ = jQuery.noConflict();
+                j$(document).ready( function () {
+                    var accountTable= j$('[id$="AccountTable"]').DataTable({
+                        
+                    });
+                });
+           
+          </script>
+     
+    </apex:form>  
+</apex:page>

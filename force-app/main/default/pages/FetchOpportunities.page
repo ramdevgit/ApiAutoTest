@@ -1,0 +1,17 @@
+<apex:page standardController="Opportunity" extensions="OpportunityController" recordSetVar="opportunityList" >
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockTable value="{!opportunityList}" var="opportunity">
+                <apex:column value="{!opportunity.Name}"/>
+                <apex:column value="{!opportunity.Account.Name}"/>
+                <apex:column value="{!opportunity.Manager_Email__c}"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+        <apex:commandButton action="{!sendEmail}" value="SendEmail" id="sendEmail"/>
+    </apex:form>
+    
+    <script>
+       var opportunityList = JSON.parse(JSON.stringify('{!opportunityList}'));
+        console.log('opportunityList::length', opportunityList.length,'opportunityList', JSON.parse(JSON.stringify(opportunityList)));
+    </script>
+</apex:page>

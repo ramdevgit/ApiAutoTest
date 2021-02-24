@@ -1,0 +1,74 @@
+<aura:component controller="ContactController">
+        <!--Aura attributes-->
+        <aura:attribute name="contactList" type="Object" description="This attribute used to dislplay the data from wrapperclass"/>
+        <aura:attribute name="editContact" type="Contact" description="This attributed used to edit record on slds modal"/>
+        <aura:attribute name="editableContact" type="Boolean" default="false" description="This attribute used to show and hide based on critiria"/>
+        <aura:attribute name="columns" type="List" description="This attribute used to store the columns details "/>
+        
+        <!--Aura handler methods-->
+        <aura:handler name="closeEditEvent" event="c:closeEditEvent" action="{!c.handleCancelEditEvent}"  description="This handler method used to handle the close modal action"/>
+        <aura:handler name="init"  action="{! c.doInit }" value="{!this}"/>
+        
+        <aura:if isTrue="{!v.editableContact}">
+            <section role="dialog" tabindex="-1" aura:id="Modalbox" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container" >
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.handleCancelEditEvent}">
+                            <!--<svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                            </svg>-->
+                            <lightning:icon iconName="utility:close" alternativeText="close!" variant="close" size="small"/>
+                            <!-- <span class="slds-assistive-text">Close</span>-->
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit Contact</h2>
+                    </header>
+                    <c:EditContactComponent contactRecord="{!v.editContact}"/>
+                    <!--<ramsoftsquare:EditContactRecordEditForm contact="{!v.editContact}"/>-->
+                </div>
+            </section>
+            
+            <div aura:id="Modalbackdrop"  class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if> 
+        
+        <div class=" ">
+            <aura:iteration items="{!v.contactList.listContact}" var="contact" indexVar="index">
+                <lightning:card  class="">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col">
+                            
+                            <span>{!index}</span>
+                        </div>
+                        <div class="slds-col">
+                            <label>Name</label><br/>
+                            <span>{!contact.Name}</span>
+                        </div>
+                        <div class="slds-col">
+                            <label>Account</label><br/>
+                            <span>{!contact.Account.Name}</span>
+                        </div>
+                        <div class="slds-col">
+                            <label>Activation Date</label><br/>
+                            <span>{!contact.ramsoftsquare__Activation_Date__c}</span>
+                        </div>
+                        <div class="slds-col">
+                            <label> Primary Contact</label><br/>
+                            <span>{!contact.ramsoftsquare__Is_Primary_Contact__c}</span>
+                        </div>
+                        <div class="slds-col">
+                            <label>Price</label><br/>
+                            <span>{!contact.ramsoftsquare__Price__c}</span>
+                        </div>
+                        <div class="slds-col">
+                            <label>Country</label><br/>
+                            <span>{!contact.ramsoftsquare__Country__c}</span>
+                        </div>
+                        <div class="slds-col">
+                            <span><lightning:button label="Edit"  value="{!contact}" onclick="{!c.editContact}"/></span>
+                        </div>
+                        
+                    </div>
+                </lightning:card>
+            </aura:iteration>
+        </div>     
+        
+    </aura:component>

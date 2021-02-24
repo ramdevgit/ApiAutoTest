@@ -1,0 +1,50 @@
+.THIS .treemenu {
+    width: 20% !important;
+    border-right: thin solid black;
+}
+.THIS .treerightmenu{
+    width: 20%;
+    border-left: thin solid black;
+}
+.THIS .treerightmenuinner{
+    height: 30%;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top :30px;
+    border:thin solid black;
+}
+.THIS.background{
+    overflow: hidden;
+    width: 100%;
+    height:100% !important;
+    background-color: white;
+    border:thin solid black;
+}
+.THIS .accountHeader{
+    width: 60% !important;
+    border-bottom : thin solid black;
+}
+.THIS .accountHeaderTitle{
+    font-weight: bold;
+}
+.THIS .accountLeft{
+    margin-left: auto;
+    margin-right: auto;
+    width:20%;
+}
+.THIS .accountRight{
+    margin-left: auto;
+    margin-right: auto;
+    float:right;
+    width:20%;
+}
+.THIS .accountCenter{
+    width:20%;
+}
+.THIS .accountLabelElement{
+    font-weight: bold;
+}
+.THIS .contacttable{
+    height:40%;
+    border-top: thin solid black;
+}

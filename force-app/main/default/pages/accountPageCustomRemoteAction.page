@@ -1,0 +1,73 @@
+<apex:page controller="AccountController" lightningStyleSheets="true" id="AccountPage" >
+
+  <apex:form styleClass="myFormStyle" id="AccountForm" >
+      <div>
+          <apex:pageBlock title="Account"  id="AccountPageBlock">
+          
+              
+              <apex:pageBlockButtons location="bottom">
+                  <apex:commandButton value="Save" onclick="saveAccount()" reRender="false"/>
+              </apex:pageBlockButtons>    
+              <apex:pageBlockSection title="Company Details" id="companysection">
+                  <apex:inputField value="{!account.Name}" id="accName" />
+              </apex:pageBlockSection> 
+                           
+               <apex:pageBlockSection title="Address" id="addresssection">
+                  <apex:inputField value="{!account.ShippingCity}" id="ShippingCity"/>
+                  <apex:inputField value="{!account.ShippingCountry}" id="ShippingCountry" />
+                  <apex:inputField value="{!account.ShippingStreet}" id="ShippingStreet" />
+              </apex:pageBlockSection>
+              
+               <apex:pageBlockSection title="Contact Details" id="contactsection">
+                  <apex:inputField value="{!account.Phone}" id="accPhone" />
+              </apex:pageBlockSection>
+              
+             <div id="accountId">
+             
+             </div> 
+              
+          
+          </apex:pageBlock>
+      </div>
+   </apex:form>  
+        <script type="text/javascript">
+        function saveAccount(){
+                    alert('Account Save Method');
+                    console.log(document.getElementById("AccountPage:AccountForm:AccountPageBlock:companysection:accName").value);
+                    console.log(document.getElementById("AccountPage:AccountForm:AccountPageBlock:addresssection:ShippingCity").value);
+                    
+                    var accName = document.getElementById("AccountPage:AccountForm:AccountPageBlock:companysection:accName").value;
+                    var ShippingCity = document.getElementById("AccountPage:AccountForm:AccountPageBlock:addresssection:ShippingCity").value;
+                    var ShippingCountry = document.getElementById("AccountPage:AccountForm:AccountPageBlock:addresssection:ShippingCountry").value;
+                    var ShippingStreet = document.getElementById("AccountPage:AccountForm:AccountPageBlock:addresssection:ShippingStreet").value;
+                    var accPhone = document.getElementById("AccountPage:AccountForm:AccountPageBlock:contactsection:accPhone").value;
+                    
+                    alert('Account was save Progress');
+
+                   Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.AccountController.saveAccount}',accName, ShippingCity, ShippingCountry, ShippingStreet, accPhone,
+                            function(result, event){
+                            console.log('---result'+ result);
+                                    if(event.status){
+                                     console.log('---result'+ result);
+                                     alert('---result'+ result);
+                                     var accId= document.createElement("p");
+                                     var accNode= document.createTextNode("Account Id                  "+ result);
+                                     accId.appendChild(accNode); 
+                                     var element = document.getElementById("accountId");
+                                     element.appendChild(accId);
+                                    }
+                                     
+                                   
+                                   
+                            },
+                            {escape : true} 
+                            );
+                    
+
+                    alert('Account was save Done');
+
+        }
+    </script>  
+ 
+ 
+</apex:page>

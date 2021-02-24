@@ -1,0 +1,21 @@
+<apex:page >
+    <p>
+        test lightning assign
+    </p>
+    <apex:includeLightning />
+    <div id="lightning"/>
+        
+        
+        <script type = "text/javascript">
+         
+    	 $Lightning.use("ramsoftsquare:testLightningApp", function() {
+                $Lightning.createComponent("ramsoftsquare:testLightningCmp",
+                                           {},
+                                           "lightning",
+                                           function(cmp) {
+                                               console.log("RoundRobinHistoryDeletion was created");
+                                           }
+                                          );
+            });
+    </script>
+</apex:page>

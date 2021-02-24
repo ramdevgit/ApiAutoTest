@@ -1,0 +1,146 @@
+<apex:page controller="AccountController" id="account_page">
+    
+    <head>
+        <apex:includeScript value="{! $Resource.jQuery}"/>
+        <apex:includeScript value="{!$Resource.dataTable}"/>
+        <apex:stylesheet value="{!$Resource.dataTablecss}"/>
+
+        <style>
+           table{
+                border-collapse: collapse;
+                width : 100%;
+            }
+            th{
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #4CAF50;
+                color: white;            
+            }
+            
+             td, th {
+               border: 1px solid #ddd;
+               padding: 8px;
+            }
+            
+            tr:nth-child(even){
+                background-color: #f2f2f2;
+           }
+            
+           tr:hover {
+                 background-color: #ddd;
+            }
+        </style>
+    </head>    
+    <apex:form id="account_form" >
+        
+                       Account Name:<input type="text" id="accName"/>
+                       <div id="pageResponseErrors">
+                          
+                      </div>
+                      <div id="accTableDiv">
+                         
+                      </div>
+       
+       <script>
+           var accData;
+          $(document).ready(function(){ 
+          
+            console.log('name value---', $('#accName').val());
+           $('#accName').on('change keyup paste input', function(){
+               console.log('name value---', $('#accName').val());
+                var table = document.getElementById('accTableDiv');
+                console.log('tableDiv---', table );
+                var accountTable ='<table id="accTable"><thead><tr><th>Account Name</th><th>Shipping Country</th><th>Shipping City </th><th>Shipping Street</th><th>Phone </th></tr></thead>';
+                var search = $('#accName').val();
+                
+                 if(!($('#accName').val() == '')){                                                     
+                                                 
+                        AccountController.searchAccount( search ,
+                                                        
+                                    function(result, event){
+                                    
+                                            
+                                            if(event.status){
+                                                console.log('accountList----', result);
+                                              
+                                                for(var i=0; i<result.length; i++){
+                                                
+                                                      console.log('account Name----', result[i].Name);
+                                                          var phoneNumber;
+                                                          if (typeof(result[i].Phone) != 'undefined' && result[i].Phone != null){
+                                                                   phoneNumber =' '+  result[i].Phone;
+ 
+                                                          }else{
+                                                              phoneNumber =' ';  
+                                                         }
+                                                         var country;
+                                                          if (typeof(result[i].ShippingCountry) != 'undefined' && result[i].ShippingCountry != null){
+                                                                   country =' '+  result[i].ShippingCountry;
+ 
+                                                          }else{
+                                                              country =' ';  
+                                                         }
+                                                         var city;
+                                                          if (typeof(result[i].ShippingCity) != 'undefined' && result[i].ShippingCity!= null){
+                                                                   city =' '+  result[i].ShippingCity;
+ 
+                                                          }else{
+                                                              city =' ';  
+                                                         }
+                                                         var street;
+                                                          if (typeof(result[i].ShippingStreet) != 'undefined' && result[i].ShippingStreet!= null){
+                                                                   street =' '+ result[i].ShippingStreet;
+ 
+                                                          }else{
+                                                              street =' ';  
+                                                         }
+                                                         
+                                                        accountTable += '<tr>';
+                                                        accountTable += '<td>'+result[i].Name+'</td>';
+                                                        accountTable += '<td>'+country+'</td>';
+                                                        accountTable += '<td>'+city  +'</td>';
+                                                        accountTable += '<td>'+ street +'</td>';
+                                                        accountTable += '<td>'+ phoneNumber  +'</td>';
+                                                        accountTable += '</tr>';
+        
+                    
+                                                
+                                                }
+                                                 accountTable +='</table>';
+                                                 console.log('---accountTable---', accountTable);
+                                                 table.innerHTML = accountTable;
+                                                
+                                                    $(document).ready( function () {
+                                                        var accountTable= $('[id$="accTable"]').DataTable({
+                                                             
+                                                        });
+                                                    });
+                                                 console.log('tableDib--', table);
+                                                 
+                                     
+                                                    
+                                            } else if(event.type == 'exception'){
+                                                      document.getElementById('pageResponseErrors').innerHtml = event.message + event.where;
+                                              } else{
+                                                      document.getElementById('pageResponseErrors').innerHtml = event.message;
+                                                  }
+                                            
+                                            
+                                      },{escape : true} 
+                               );
+                    }  
+                    else{
+                            $('#accTable').empty();
+                    }         
+               
+                
+           });   
+          
+         }); 
+                          
+                         
+       </script>            
+            
+</apex:form>
+</apex:page>

@@ -1,0 +1,64 @@
+<aura:component controller="AccountController" implements="force:appHostable" access="global" >
+    <head>
+        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>-->
+        <ltng:require styles="{! $Resource.dataTable + '/DataTables-1.10.16/media/css/jquery.dataTables.min.css'}" 
+                      scripts="{!join(',', 
+                               $Resource.JqueryLibrary 
+                               , $Resource.dataTable+'/DataTables-1.10.16/media/js/jquery.dataTables.min.js'
+                               )
+                               }" afterScriptsLoaded="{!c.scriptsLoaded}"/>
+    </head>
+    
+    <!-- Declaration Attributes-->
+    <aura:attribute name="accountList" type="Account[]"/>
+    <!--<aura:attribute name="paginationList" type="Account[]"/>
+    <aura:attribute name="pageSize" type="Integer" default="15"/>
+    <aura:attribute name="totalSize" type="Integer"/>
+    <aura:attribute name="start" type="Integer" />
+    <aura:attribute name="end" type="Integer"/>-->
+    
+    
+    
+    <aura:handler name="init" value="{!this}" action="{! c. doInit}"/>
+    
+    <table   id="accountTable" class="slds-table slds-table_cell-buffer slds-table_bordered myTable">
+        <thead >
+            <tr  class="slds-line-height_reset">
+                <th scope="col">
+                    <div class="slds-truncate" title="Account Name">Account Name</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Shipping Country">Shipping Country</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Shipping City">Shipping City</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Shipping Street">Shipping Street</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Phone">Phone</div>
+                </th>
+                
+            </tr>       
+        </thead>
+        <tbody>
+            <aura:iteration var="account" items="{!v.accountList}" >
+                <tr class="slds-hint-parent">
+                    <td class="slds-truncate">{!account.Name}</td>
+                    <td class="slds-truncate">{!account.ShippingCountry}</td>
+                    <td class="slds-truncate">{!account.ShippingCity}</td>
+                    <td class="slds-truncate">{!account.ShippingStreet}</td>
+                    <td class="slds-truncate">{!account.Phone}</td>
+                </tr>
+            </aura:iteration>  
+        </tbody>
+        <tfoot>
+            <!--  <lightning:button label="First" disabled="{!v.start == 0}"  onclick="{!c.firstPage}"/>
+            <lightning:button label="Previous" disabled="{!v.start == 0}"  onclick="{!c.previousPage}"/>
+            <lightning:button label="Next" disabled="{!v.end >= v.totalSize}" onclick="{!c.nextPage}" />
+            <lightning:button label="Last" disabled="{!v.end >= v.totalSize}" onclick="{!c.lastPage}" />
+            {!v.paginationList.length} rows in {!v.accountList.length}-->
+        </tfoot>
+    </table>   
+</aura:component>
