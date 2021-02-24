@@ -19,3 +19,4 @@ def test_recharge(baserequest,url,recharge_data,db_info):
     Check.equal(r.json(),recharge_data['expect'],'code,status,msg')
     # 删除
     MysqlOp.delete_user(db_info,recharge_data['regdata']['mobilephone'])
+
