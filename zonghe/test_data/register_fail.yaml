@@ -1,0 +1,12 @@
+#密码为空
+- data: {"mobilephone":1888888888,"pwd":""}
+  expect: {"status":0,"code":"20103","data":None}
+#密码大于18
+- data: {"mobilephone":1888888888,"pwd":"1111111111111111111"}
+  expect: {"status":0,"code":"20108","data":None}
+#密码小于6
+- data: {"mobilephone":1888888888,"pwd":"11222"}
+  expect: {"status":0,"code":"20108","data":None}
+#手机号格式错误
+- data: {"mobilephone":18888888,"pwd":"123456"}
+  expect: {"status":0,"code":"20109","data":None}

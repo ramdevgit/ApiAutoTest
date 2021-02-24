@@ -1,0 +1,4 @@
+- data: {"mobilephone":"13200000000","pwd":"123456"}
+  expect: {"status":1,"code":"10001","msg":"注册成功"}
+- data: {"mobilephone":"13211111111","pwd":"123456"}
+  expect: {"status":1,"code":"10001","msg":"注册成功"}
